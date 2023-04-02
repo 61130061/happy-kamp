@@ -1,15 +1,16 @@
 import { ProductType } from '../pages/index'
 
 interface PropsType {
-  product: ProductType
+  product: ProductType,
+  onOpenQuickView: Function
 }
 
-export default function ProductCard ({ product }: PropsType) {
+export default function ProductCard ({ product, onOpenQuickView }: PropsType) {
   return (
     <div className="group left-[10px] snap-start px-5">
       <div className="relative mb-3">
         <img className="min-w-[320px]" src={product.media[0].url} />
-        <button className="w-full bg-white bg-opacity-50 py-3 absolute bottom-0 transition-all duration-300 transform translate-y-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 z-10">
+        <button onClick={() => onOpenQuickView()} className="w-full bg-white bg-opacity-50 py-3 absolute bottom-0 transition-all duration-300 transform translate-y-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 z-10">
           Quick View
         </button>
       </div>

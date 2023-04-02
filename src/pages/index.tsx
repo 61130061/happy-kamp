@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 
@@ -6,14 +7,7 @@ import Annoucement from '../components/Annoucement';
 import Navbar from '../components/Navbar';
 import Carousel from '../components/Carousel';
 import ProductCard from '../components/ProductCard';
-
-interface MediaType {
-  url: string,
-  index: number,
-  mediaType: string,
-  altText: string | null,
-  title: string
-}
+import QuickViewModal from '../components/QuickViewModal';
 
 export interface ProductType {
   id: string,
@@ -21,7 +15,21 @@ export interface ProductType {
   price: number,
   discountedPrice: number,
   urlPart: string,
-  media: MediaType[]
+  sku: string,
+  inventory: {
+    quantity: number
+  },
+  options: Array<{
+    id: string,
+    key: string
+  }>,
+  media: Array<{
+    url: string,
+    index: number,
+    mediaType: string,
+    altText: string | null,
+    title: string
+  }>
 }
 
 export const getServerSideProps: GetServerSideProps<{ newProducts: ProductType[], landImgs: string[] }> = async (context) => {
@@ -40,6 +48,8 @@ export const getServerSideProps: GetServerSideProps<{ newProducts: ProductType[]
 }
 
 export default function Home({ newProducts, landImgs }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(null);
+
   return (
     <>
       <Head>
@@ -51,6 +61,10 @@ export default function Home({ newProducts, landImgs }: InferGetServerSidePropsT
       </Head>
 
       <main>
+        {quickViewProduct &&
+          <QuickViewModal product={quickViewProduct} onClose={() => setQuickViewProduct(null)} />
+        }
+
         <Annoucement />
 
         <Navbar />
@@ -62,7 +76,7 @@ export default function Home({ newProducts, landImgs }: InferGetServerSidePropsT
           <div className="text-3xl mt-10 mb-5 text-center">New Arrivals</div>
           <div className="flex hide-scrollbar overflow-x-scroll snap-mandatory snap-x px-8 pb-4">
             {newProducts.map((d, i) =>
-              <ProductCard product={d} />
+              <ProductCard key={i} onOpenQuickView={() => setQuickViewProduct(d)} product={d} />
             )}
           </div>
           <div className="flex justify-center mt-14">
