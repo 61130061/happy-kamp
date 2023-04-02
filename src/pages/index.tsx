@@ -1,12 +1,13 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
-import { colors } from 'tailwindcss/defaultTheme';
 
 import Footer from '../components/Footer';
 import Annoucement from '../components/Annoucement';
 import Navbar from '../components/Navbar';
+import Carousel from '../components/Carousel';
+import ProductCard from '../components/ProductCard';
 
-interface Media {
+interface MediaType {
   url: string,
   index: number,
   mediaType: string,
@@ -14,16 +15,16 @@ interface Media {
   title: string
 }
 
-interface Product {
+export interface ProductType {
   id: string,
   name: string,
   price: number,
   discountedPrice: number,
   urlPart: string,
-  media: Media[]
+  media: MediaType[]
 }
 
-export const getServerSideProps: GetServerSideProps<{ newProducts: Product[], landImgs: string[] }> = async (context) => {
+export const getServerSideProps: GetServerSideProps<{ newProducts: ProductType[], landImgs: string[] }> = async (context) => {
   const resNewProducts = await fetch('https://skillkamp-api.com/v1/api/products/new_arrivals');
   const resLandImgs = await fetch('https://skillkamp-api.com/v1/api/images/landing');
 
@@ -54,24 +55,19 @@ export default function Home({ newProducts, landImgs }: InferGetServerSidePropsT
 
         <Navbar />
 
-        {/* Courasal */}
-        <div>
-          {landImgs.map((d, i) =>
-            <img key={i} src={d} width="200px" />
-          )}
-        </div>
+        <Carousel images={landImgs} />
 
         {/* New Arrivavls */}
-        <div>
-          {newProducts.map((d, i) =>
-            <div key={i}>
-              {d.media.map((md, mi) =>
-                <img key={mi} src={md.url} width="100px" />
-              )}
-              <div>{d.name}</div>
-              <div>{d.price}</div>
-            </div>
-          )}
+        <div className="py-5">
+          <div className="text-3xl mt-10 mb-5 text-center">New Arrivals</div>
+          <div className="flex hide-scrollbar overflow-x-scroll snap-mandatory snap-x px-8 pb-4">
+            {newProducts.map((d, i) =>
+              <ProductCard product={d} />
+            )}
+          </div>
+          <div className="flex justify-center mt-14">
+            <button>Shop All</button>
+          </div>
         </div>
 
         <Footer />
