@@ -9,10 +9,11 @@ Frontend - happy kids!
 
 ## TODO List
 - [ ] Dealing with font
+- [ ] Dealing with Logo
 
 
 ## Added Feature
 - [ ] fix product image not found
 - [ ] Out of stock
 - [ ] Select options for quick add to cart
-- [ ] Multiple currency
+- [ ] Multiple currencies
