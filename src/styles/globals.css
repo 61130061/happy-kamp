@@ -7,3 +7,11 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 }
+
+h1 {
+  @apply font-[450] text-[24px] leading-[28.8px] md:text-[48px] md:leading-[52.8px] lg:text-[66px] lg:leading-[72.6px];
+}
+
+h2 {
+  @apply font-[450] text-[20px] leading-[24px] md:text-[32px] md:leading-[38.4px] lg:text-[59px] lg:leading-[70.8px];
+}

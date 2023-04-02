@@ -1,11 +1,40 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
 
-const inter = Inter({ subsets: ['latin'] })
+interface Media {
+  url: string,
+  index: number,
+  mediaType: string,
+  altText: string | null,
+  title: string
+}
 
-export default function Home() {
+interface Product {
+  id: string,
+  name: string,
+  price: number,
+  discountedPrice: number,
+  urlPart: string,
+  media: Media[]
+}
+
+export const getServerSideProps: GetServerSideProps<{ newProducts: Product[], landImgs: string[] }> = async (context) => {
+  const resNewProducts = await fetch('https://skillkamp-api.com/v1/api/products/new_arrivals');
+  const resLandImgs = await fetch('https://skillkamp-api.com/v1/api/images/landing');
+
+  const newProducts = await resNewProducts.json();
+  const landImgs = await resLandImgs.json();
+
+  return {
+    props: {
+      newProducts: newProducts.detail.data.catalog.category.productsWithMetaData.list,
+      landImgs: landImgs.detail
+    },
+  }
+}
+
+export default function Home({ newProducts, landImgs }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
@@ -16,7 +45,23 @@ export default function Home() {
       </Head>
 
       <main>
-        <div className="text-4xl">happy kamp</div>
+        <div className="text-4xl text-neutral-500">happy kamp</div>
+        <div>
+          {landImgs.map((d, i) =>
+            <img key={i} src={d} width="200px" />
+          )}
+        </div>
+        <div>
+          {newProducts.map((d, i) =>
+            <div key={i}>
+              {d.media.map((md, mi) =>
+                <img key={mi} src={md.url} width="100px" />
+              )}
+              <div>{d.name}</div>
+              <div>{d.price}</div>
+            </div>
+          )}
+        </div>
       </main>
     </>
   )
