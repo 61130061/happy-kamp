@@ -18,7 +18,9 @@ export default function Navbar () {
           <Link href="/our-story">
             <button className={`hover:text-primary-3 px-8 py-3${router.pathname === "/our-story" ? " text-red-500":""}`}>Our Story</button>
           </Link>
-          <button className="px-8 py-3">Contact</button>
+          <Link href="/contact">
+            <button className={`hover:text-primary-3 px-8 py-3${router.pathname === "/contact" ? " text-red-500":""}`}>Contact</button>
+          </Link>
         </div>
 
         {/* Right menu */}
