@@ -13,6 +13,7 @@ export interface ProductType {
   id: string,
   name: string,
   price: number,
+  formattedPrice: string,
   discountedPrice: number,
   urlPart: string,
   sku: string,

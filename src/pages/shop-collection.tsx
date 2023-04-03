@@ -9,6 +9,7 @@ import Annoucement from '../components/Annoucement';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProductCard from '../components/ProductCard';
+import Accordion from '../components/Accordion';
 
 interface FilterType {
   name: string,
@@ -72,26 +73,15 @@ export default function ShopCollection ({ products, filters }: InferGetServerSid
             <div className="w-[240px] p-[20px]">
               <div className="text-2xl border-b border-primary-1 pb-[18px]">Filter by</div>
               {/* Collectionn Filter */}
-              <div className="py-[20px] border-b border-primary-1">
-                <button onClick={() => setShowCollection(prev => !prev)} className="w-full py-1 flex justify-between gap-3">
-                  <div>Collection</div>
-                  <div>{showCollection ? '-':'+'}</div>
-                </button>
-                {showCollection &&
-                  <div className="mt-2 text-sm">
-                    {filters[0].values.map((d, i) =>
-                      <div key={i}>{d.value}</div>
-                    )}
-                  </div>
-                }
-              </div>
+              <Accordion title="Collection">
+                <div className="mt-2 text-sm">
+                  {filters[0].values.map((d, i) =>
+                    <div key={i}>{d.value}</div>
+                  )}
+                </div>
+              </Accordion>
               {/* Price Filter */}
-              <div className="py-[20px] border-b border-primary-1">
-                <button onClick={() => setShowPrice(prev => !prev)} className="w-full py-1 flex justify-between gap-3">
-                  <div>Price</div>
-                  <div>{showPrice ? '-':'+'}</div>
-                </button>
-                {showPrice &&
+              <Accordion title="Price">
                   <div className="pt-5 pb-3">
                     <ReactSlider
                       defaultValue={price}
@@ -107,42 +97,29 @@ export default function ShopCollection ({ products, filters }: InferGetServerSid
                       <div>{price[1]}$</div>
                     </div>
                   </div>
-                }
-              </div>
+              </Accordion>
               {/* Color Filter */}
-              <div className="py-[20px] border-b border-primary-1">
-                <button onClick={() => setShowColor(prev => !prev)} className="w-full py-1 flex justify-between gap-3">
-                  <div>Color</div>
-                  <div>{showColor ? '-':'+'}</div>
-                </button>
-                {showColor &&
-                  <div className="flex gap-3 flex-wrap pb-1 pt-3">
-                    {filters[2].values.map((d, i) =>
-                      <div key={i}>
-                        <input id={d.key} className="peer sr-only" type="checkbox" />
-                        <label htmlFor={d.key} className="w-5 h-5 border-2 border-gray-100 block peer-checked:ring-1 ring-offset-2 ring-black rounded-full" style={{ backgroundColor: d.key }} />
-                      </div>
-                    )}
-                  </div>
-                }
-              </div>
+              <Accordion title="Color">
+                <div className="flex gap-3 flex-wrap pb-1 pt-3 px-1">
+                  {filters[2].values.map((d, i) =>
+                    <div key={i}>
+                      <input id={d.key} className="peer sr-only" type="checkbox" />
+                      <label htmlFor={d.key} className="w-5 h-5 border-2 border-gray-100 block peer-checked:ring-1 ring-offset-2 ring-black rounded-full" style={{ backgroundColor: d.key }} />
+                    </div>
+                  )}
+                </div>
+              </Accordion>
               {/* Size Filter */}
-              <div className="py-[20px] border-b border-primary-1">
-                <button onClick={() => setShowSize(prev => !prev)} className="w-full py-1 flex justify-between gap-3">
-                  <div>Size</div>
-                  <div>{showSize ? '-':'+'}</div>
-                </button>
-                {showSize &&
-                  <div className="text-sm mt-2">
-                    {filters[3].values.map((d, i) =>
-                      <label key={i} className="flex hover:cursor-pointer items-center gap-3">
-                        <input type="checkbox" />
-                        <div>{d.key}</div>
-                      </label>
-                    )}
-                  </div>
-                }
-              </div>
+              <Accordion title="Size">
+                <div className="text-sm mt-2">
+                  {filters[3].values.map((d, i) =>
+                    <label key={i} className="flex hover:cursor-pointer items-center gap-3">
+                      <input type="checkbox" />
+                      <div>{d.key}</div>
+                    </label>
+                  )}
+                </div>
+              </Accordion>
               {/* Clear Filter */}
               <div className="text-sm py-[20px]">
                 <button>Clear Filters x</button>
