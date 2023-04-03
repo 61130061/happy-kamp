@@ -14,7 +14,9 @@ export default function Navbar () {
           <Link href="/">
             <button className={`hover:text-primary-3 px-8 py-3${router.pathname === "/" ? " text-primary-3":""}`}>Home</button>
           </Link>
-          <button className="px-8 py-3">Shop Collection</button>
+          <Link href="/shop-collection">
+            <button className={`hover:text-primary-3 px-8 py-3${router.pathname === "/shop-collection" ? " text-red-500":""}`}>Shop Collection</button>
+          </Link>
           <Link href="/our-story">
             <button className={`hover:text-primary-3 px-8 py-3${router.pathname === "/our-story" ? " text-red-500":""}`}>Our Story</button>
           </Link>

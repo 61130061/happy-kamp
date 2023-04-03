@@ -28,3 +28,16 @@ h2 {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.track {
+  height: 2px;
+  background-color: #cbd5e0;
+}
+
+.track-1 {
+  background-color: black;
+}
+
+.track-2 {
+  background-color: #cbd5e0;
+}

@@ -5,7 +5,7 @@ Frontend - happy kids!
 ## Stack
 - NextJS w/ Typescript & Eslint
 - Tailwind
-
+- [React-slider](https://zillow.github.io/react-slider/#reactsliderhttps://zillow.github.io/react-slider) for price range slider
 
 ## TODO List
 - [ ] Dealing with font
