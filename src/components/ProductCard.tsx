@@ -3,10 +3,11 @@ import Link from 'next/link';
 
 interface PropsType {
   product: ProductType,
-  onOpenQuickView: Function
+  onOpenQuickView: Function,
 }
 
 export default function ProductCard({ product, onOpenQuickView }: PropsType) {
+
   return (
     <div className="group left-[10px] snap-start px-5">
       <div className="relative mb-3">

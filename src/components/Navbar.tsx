@@ -1,7 +1,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-export default function Navbar () {
+interface PropsType {
+  onOpenCart: Function,
+  cartNumber: number
+}
+
+export default function Navbar ({ onOpenCart, cartNumber }: PropsType) {
   const router = useRouter();
 
   return (
@@ -31,7 +36,7 @@ export default function Navbar () {
             <img src="/icon/user-svgrepo-com.svg" width="25px" />
             <div>Login</div>
           </button>
-          <button className="flex gap-5 p-3">Cart <span>0</span></button>
+          <button onClick={() => onOpenCart()} className="flex gap-5 p-3">Cart <span>{cartNumber}</span></button>
         </div>
       </div>
     </nav>
