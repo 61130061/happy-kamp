@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
+import { CookiesProvider } from 'react-cookie';
 
 import { CartPayloadType  } from '.'; 
 
@@ -42,8 +43,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   pageProps.updateCart = updateCart 
   pageProps.cartItems = cartItems;
-  pageProps.isLogin = isLogin;
   pageProps.onAddToCart = onAddToCart;
   pageProps.onDelCartItem = onDelCartItem;
-  return <Component {...pageProps} />
+  return (
+    <CookiesProvider>
+      <Component {...pageProps} />
+    </CookiesProvider>
+  )
 }

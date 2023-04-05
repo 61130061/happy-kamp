@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 import Layout from '../components/Layout';
@@ -71,7 +71,6 @@ export const getServerSideProps: GetServerSideProps<{ newProducts: ProductType[]
     },
   }
 }
-
 
 export default function Home ({ 
   newProducts, 

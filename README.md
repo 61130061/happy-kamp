@@ -6,6 +6,7 @@ Frontend - happy kids!
 - NextJS w/ Typescript & Eslint
 - Tailwind
 - [React-slider](https://zillow.github.io/react-slider/#reactsliderhttps://zillow.github.io/react-slider) for price range slider
+- [React-cookie](https://github.com/reactivestack/cookies.git)
 
 ## TODO List
 - [ ] Dealing with font
