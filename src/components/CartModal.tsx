@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 import { CartPayloadType, ProductType } from '../pages/index';
 
@@ -54,13 +55,13 @@ export default function CartModal ({ isOpen, onClose, cartItems, onDelCartItem }
                     <>
                       <div className="space-y-3 px-5 flex-1 overflow-y-scroll">
                         {cartItems.map((d, i) =>
-                          <Items onDel={onDelCartItem} data={d} key={i} />
+                          <Item onDel={onDelCartItem} data={d} key={i} />
                         )}
                       </div>
                       <div className="p-8 text-3xl">
                         <div>Subtotal</div>
                         <div>$ {cartItems.reduce((acc, ele) => acc+(ele.price * ele.qty), 0).toFixed(2)}</div>
-                        <button className="w-full text-sm p-3 bg-primary-1 text-white mt-10">View Cart</button>
+                        <Link href="/shopping-cart"><button className="w-full text-sm p-3 bg-primary-1 text-white mt-10">View Cart</button></Link>
                       </div>
                     </> :
                     <div className="text-center">Cart is empty</div>
@@ -89,7 +90,7 @@ interface ItemsPropsType {
   onDel: Function
 }
 
-function Items ({ data, onDel }: ItemsPropsType) {
+function Item ({ data, onDel }: ItemsPropsType) {
   const [img, setImg] = useState<string | null>(null);
 
   useEffect(() => {
