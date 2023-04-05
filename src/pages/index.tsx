@@ -7,8 +7,10 @@ import ProductCard from '../components/ProductCard';
 import QuickViewModal from '../components/QuickViewModal';
 
 export interface AppPropsType {
-  cartItems: unknown[],
   isLogin: boolean,
+  cartItems: CartPayloadType[],
+  onAddToCart: Function,
+  onDelCartItem: Function,
   updateCart: Function
 }
 
@@ -25,15 +27,34 @@ export interface ProductType {
   },
   options: Array<{
     id: string,
-    key: string
+    key: string,
+    selections: Array<{
+      id: number,
+      value: string,
+      key: string
+      linkedMediaItems: Array<{
+        fullUrl: string,
+      }>
+    }>
   }>,
   media: Array<{
     url: string,
+    fullUrl: string,
     index: number,
     mediaType: string,
     altText: string | null,
     title: string
   }>
+}
+
+export interface CartPayloadType {
+  sku: string,
+  name: string,
+  price: number,
+  discountedPrice: number,
+  color: string,
+  size: string,
+  qty: number
 }
 
 export const getServerSideProps: GetServerSideProps<{ newProducts: ProductType[], landImgs: string[] }> = async (context) => {
@@ -56,16 +77,16 @@ export default function Home ({
   newProducts, 
   landImgs, 
   cartItems, 
-  updateCart,
-  isLogin
+  onAddToCart,
+  onDelCartItem
 }: InferGetServerSidePropsType<typeof getServerSideProps> & AppPropsType) {
   const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(null);
 
   return (
-    <Layout cartItems={cartItems}>
+    <Layout onDelCartItem={onDelCartItem} cartItems={cartItems}>
       <>
         {quickViewProduct &&
-          <QuickViewModal product={quickViewProduct} onClose={() => setQuickViewProduct(null)} />
+          <QuickViewModal onAddToCart={onAddToCart} sku={quickViewProduct.sku} onClose={() => setQuickViewProduct(null)} />
         }
 
         <Carousel images={landImgs} />
@@ -75,7 +96,7 @@ export default function Home ({
           <div className="text-3xl mt-10 mb-5 text-center">New Arrivals</div>
           <div className="flex hide-scrollbar overflow-x-scroll snap-mandatory snap-x px-8 pb-4">
             {newProducts.map((d, i) =>
-              <ProductCard key={i} onOpenQuickView={() => setQuickViewProduct(d)} product={d} />
+              <ProductCard onAddToCart={() => setQuickViewProduct(d)} key={i} onOpenQuickView={() => setQuickViewProduct(d)} product={d} />
             )}
           </div>
           <div className="flex justify-center mt-14">

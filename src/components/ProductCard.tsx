@@ -4,9 +4,10 @@ import Link from 'next/link';
 interface PropsType {
   product: ProductType,
   onOpenQuickView: Function,
+  onAddToCart: Function
 }
 
-export default function ProductCard({ product, onOpenQuickView }: PropsType) {
+export default function ProductCard({ product, onOpenQuickView, onAddToCart }: PropsType) {
 
   return (
     <div className="group left-[10px] snap-start px-5">
@@ -23,7 +24,7 @@ export default function ProductCard({ product, onOpenQuickView }: PropsType) {
           <div>{product.name}</div>
           <div>{product.formattedPrice}</div>
         </Link>
-        <button className="border py-2 border-black">Add to Cart</button>
+        <button onClick={() => onAddToCart()} className="border py-2 border-black">Add to Cart</button>
       </div>
     </div>
   )

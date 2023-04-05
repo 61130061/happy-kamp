@@ -1,21 +1,17 @@
 import { useState, useEffect } from 'react';
 
+import { CartPayloadType, ProductType } from '../pages/index';
+
 interface PropsType {
-  isLogin?: boolean,
   isOpen: boolean,
   onClose: Function,
-  cartItems: unknown[]
+  onDelCartItem: Function,
+  cartItems: CartPayloadType[]
 }
 
 
-export default function CartSlideOver ({ isOpen, isLogin, onClose, cartItems }: PropsType) {
+export default function CartModal ({ isOpen, onClose, cartItems, onDelCartItem }: PropsType) {
   const [isShown, setIsShown] = useState(isOpen);
-
-  useEffect(() => {
-    if (!isLogin) {
-
-    }
-  }, [isLogin])
 
   useEffect(() => {
     setIsShown(isOpen);
@@ -56,18 +52,14 @@ export default function CartSlideOver ({ isOpen, isLogin, onClose, cartItems }: 
                 <div className="mt-8 flex flex-col h-screen justify-between flex-1">
                   {cartItems.length > 0 ?
                     <>
-                      <div className="space-y-10 px-8 flex-1 overflow-y-scroll">
+                      <div className="space-y-3 px-5 flex-1 overflow-y-scroll">
                         {cartItems.map((d, i) =>
-                          <div key={i}>
-                            <div>name</div>
-                            <div>price</div>
-                            <div>Quantity</div>
-                          </div>
+                          <Items onDel={onDelCartItem} data={d} key={i} />
                         )}
                       </div>
                       <div className="p-8 text-3xl">
                         <div>Subtotal</div>
-                        <div>1000$</div>
+                        <div>$ {cartItems.reduce((acc, ele) => acc+(ele.price * ele.qty), 0).toFixed(2)}</div>
                         <button className="w-full text-sm p-3 bg-primary-1 text-white mt-10">View Cart</button>
                       </div>
                     </> :
@@ -90,3 +82,34 @@ export default function CartSlideOver ({ isOpen, isLogin, onClose, cartItems }: 
     </>
   );
 };
+
+
+interface ItemsPropsType {
+  data: CartPayloadType,
+  onDel: Function
+}
+
+function Items ({ data, onDel }: ItemsPropsType) {
+  const [img, setImg] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('https://skillkamp-api.com/v1/api/products/details/'+data.sku).then(res => res.json())
+      .then(res => {
+        const url = (res.detail.data.catalog.product as ProductType).options.filter(item => item.key == 'Color')[0].selections.filter(item => item.key == data.color)[0].linkedMediaItems[0].fullUrl
+
+        if (url) setImg(url);
+      });
+  }, [data])
+
+  return (
+    <div className="border flex gap-2 p-3 relative group">
+      <button onClick={() => onDel(data)} className="absolute opacity-0 group-hover:opacity-100 top-1 right-3">x</button>
+      <img src={img ? img : ""} className="w-16" />
+      <div className="text-sm">
+        <div>{data.name}</div>
+        <div>{data.price}</div>
+        <div>{data.qty}</div>
+      </div>
+    </div>
+  )
+}

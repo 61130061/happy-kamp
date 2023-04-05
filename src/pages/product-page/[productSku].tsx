@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Head from 'next/head';
 import Link from 'next/link';
 
 import { ProductType, AppPropsType } from '../index';
@@ -7,6 +7,7 @@ import { ProductType, AppPropsType } from '../index';
 import Layout from '../../components/Layout';
 import ImageGallery from '../../components/ImageGallery';
 import Accordion from '../../components/Accordion';
+import QuickViewModal from '../../components/QuickViewModal';
 
 interface ProductDetailType {
   id: string,
@@ -60,11 +61,42 @@ export const getServerSideProps: GetServerSideProps<{
 export default function ProductPage({
   product,
   relatedProducts,
-  cartItems
+  cartItems,
+  onAddToCart,
+  onDelCartItem
 }: InferGetServerSidePropsType<typeof getServerSideProps> & AppPropsType) {
+  const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>("");
+  const [quantity, setQuantity] = useState<number>(1);
+  const [autoCart, setAutoCart] = useState<boolean>(false);
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (!product || !selectedColor || !selectedSize) return
+
+    const payload = {
+      sku: product.sku,
+      name: product.name,
+      price: product.price,
+      discountedPrice: product.discountedPrice,
+      color: selectedColor,
+      size: selectedSize,
+      qty: quantity
+    }
+
+    onAddToCart(payload, () => {
+      // TODO: Fix auto open cart working once
+      setAutoCart(true)
+    });
+  }
 
   return (
-    <Layout cartItems={cartItems} title={product.name}>
+    <Layout onOpenCart={autoCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title={product.name}>
+      {quickViewProduct &&
+        <QuickViewModal onAddToCart={onAddToCart} sku={quickViewProduct.sku} onClose={() => setQuickViewProduct(null)} />
+      }
       <div className="max-w-4xl mx-auto pt-14">
         <div className="flex">
           {/* Left Side */}
@@ -73,7 +105,7 @@ export default function ProductPage({
             <div className="text-sm mt-8">{product.description}</div>
           </div>
           {/* Right Side */}
-          <div className="w-[45%] p-[20px] text-sm">
+          <form onSubmit={onSubmit} className="w-[45%] p-[20px] text-sm">
             <div className="text-2xl mb-2">{product.name}</div>
             <div>sku: {product.sku}</div>
             <div className="text-2xl my-3">{product.formattedPrice}</div>
@@ -81,14 +113,15 @@ export default function ProductPage({
               <div className="mb-2">color:</div>
               {product.options.filter(item => item.key == "Color")[0].selections.map((d, i) =>
                 <div key={i}>
-                  <input type="radio" id={d.key} name="Color" />
+                  <input onChange={() => setSelectedColor(d.key)} type="radio" id={d.key} name="Color" required />
                   <label htmlFor={d.key}>{d.key}</label>
                 </div>
               )}
             </div>
             <div className="my-5">
               <div className="mb-2">size</div>
-              <select>
+              <select value={selectedSize ? selectedSize : ""} onChange={(e) => setSelectedSize(e.target.value)} required>
+                <option value="">Select size</option>
                 {product.options.filter(item => item.key == "Size")[0].selections.map((d, i) =>
                   <option key={i}>{d.key}</option>
                 )}
@@ -96,18 +129,18 @@ export default function ProductPage({
             </div>
             <div className="my-5">
               <div className="mb-2">Quantity</div>
-              <input type="number" defaultValue={1} step={1} max={product.inventory.quantity} />
+              <input value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} type="number" step={1} max={product.inventory.quantity} />
             </div>
             <div className="mt-5">
-              <button className="w-full mb-3 py-3 border border-black">Add to cart</button>
-              <button className="w-full mb-3 py-3 border border-black">Buy Now</button>
+              <button type="submit" className="w-full mb-3 py-3 border border-black">Add to cart</button>
+              <button type="button" className="w-full mb-3 py-3 border border-black">Buy Now</button>
             </div>
             {product.additionalInfo.map((d, i) =>
               <Accordion show title={d.title} key={i}>
                 <div className="py-2 text-sm">{d.description}</div>
               </Accordion>
             )}
-          </div>
+          </form>
         </div>
 
         {/* Related Product */}
@@ -124,7 +157,7 @@ export default function ProductPage({
                     <div>{d.name}</div>
                     <div>{d.formattedPrice}</div>
                   </Link>
-                  <button className="bg-black text-white w-full py-2 mt-2">Add to Cart</button>
+                  <button onClick={() => setQuickViewProduct(d)} className="bg-black text-white w-full py-2 mt-2">Add to Cart</button>
                 </div>
               </div>
             )}

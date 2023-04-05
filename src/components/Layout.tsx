@@ -1,6 +1,8 @@
 import { useState, useEffect, ReactNode } from 'react';
 import Head from 'next/head';
 
+import { CartPayloadType } from '@/pages';
+
 import Footer from './Footer';
 import Navbar from './Navbar';
 import Annoucement from './Annoucement';
@@ -9,11 +11,17 @@ import CartModal from './CartModal';
 interface PropsType {
   title?: string,
   children: ReactNode,
-  cartItems: unknown[]
+  onDelCartItem: Function,
+  onOpenCart?: boolean,
+  cartItems: CartPayloadType[]
 }
 
-export default function Layout ({ title, children, cartItems }: PropsType) {
+export default function Layout ({ title, onOpenCart, children, onDelCartItem, cartItems }: PropsType) {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  useEffect(() => {
+    if (onOpenCart) setIsCartOpen(onOpenCart);
+  }, [onOpenCart])
 
   return (
     <>
@@ -26,7 +34,7 @@ export default function Layout ({ title, children, cartItems }: PropsType) {
       </Head>
 
       <main>
-        <CartModal cartItems={cartItems} isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        <CartModal onDelCartItem={onDelCartItem} cartItems={cartItems} isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         <Annoucement />
         <Navbar cartNumber={cartItems.length} onOpenCart={() => setIsCartOpen(true)} />
         {children}

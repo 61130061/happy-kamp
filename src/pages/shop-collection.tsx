@@ -7,6 +7,7 @@ import { ProductType, AppPropsType } from './index';
 import Layout from '../components/Layout';
 import ProductCard from '../components/ProductCard';
 import Accordion from '../components/Accordion';
+import QuickViewModal from '../components/QuickViewModal';
 
 interface FilterType {
   name: string,
@@ -36,7 +37,8 @@ export default function ShopCollection ({
   products,
   filters,
   cartItems,
-  updateCart
+  onAddToCart,
+  onDelCartItem
 }: InferGetServerSidePropsType<typeof getServerSideProps> & AppPropsType) {
   const getMaxPrice = () => {
     return filters[1].values.reduce((max, obj) => (parseFloat(obj.key) > max ? parseFloat(obj.key) : max), 0)
@@ -47,10 +49,14 @@ export default function ShopCollection ({
   }
 
   const [price, setPrice] = useState([getMinPrice(), getMaxPrice()]);
+  const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(null);
   const [colors, setColors] = useState([]);
 
   return (
-    <Layout cartItems={cartItems} title="Shop Collection">
+    <Layout onDelCartItem={onDelCartItem} cartItems={cartItems} title="Shop Collection">
+      {quickViewProduct &&
+        <QuickViewModal onAddToCart={onAddToCart} sku={quickViewProduct.sku} onClose={() => setQuickViewProduct(null)} />
+      }
       <div className="max-w-7xl mx-auto">
         <div className="text-3xl text-center my-10">Shop Collection</div>
         <div className="flex mb-10">
@@ -111,7 +117,7 @@ export default function ShopCollection ({
           </div>
           <div className="flex-1 grid grid-cols-3 gap-y-5">
             {products.map((d, i) =>
-              <ProductCard updateCart={updateCart} key={i} product={d} onOpenQuickView={() => console.log('hi')} />
+              <ProductCard onAddToCart={() => setQuickViewProduct(d)} key={i} product={d} onOpenQuickView={() => setQuickViewProduct(d)} />
             )}
           </div>
         </div>
