@@ -15,7 +15,7 @@ export default function Accordion ({ title, show, children }: PropsType) {
   };
 
   return (
-    <div className="py-[16px] text-base border-b last:border-b-0 border-primary-1">
+    <div className="py-[16px] text-base border-b last:border-b-0">
       <button type="button" onClick={toggleAccordion} className="w-full py-1 flex items-end justify-between gap-3">
         <div>{title}</div>
         <div className="text-xl">{isOpen ? '-':'+'}</div>

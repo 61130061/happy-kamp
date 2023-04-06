@@ -22,6 +22,7 @@ export default function ProductCard({ product, onOpenQuickView, onAddToCart }: P
       <div className="relative text-center text-sm flex flex-col gap-2 bg-white z-50">
         <Link href={"/product-page/" + product.sku}>
           <div>{product.name}</div>
+          {/* TODO: Handle discount */}
           <div>{product.formattedPrice}</div>
         </Link>
         <button onClick={() => onAddToCart()} className="border py-2 border-black">Add to Cart</button>
