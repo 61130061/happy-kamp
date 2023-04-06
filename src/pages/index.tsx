@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 import Layout from '../components/Layout';
@@ -11,6 +11,7 @@ export interface AppPropsType {
   cartItems: CartPayloadType[],
   onAddToCart: Function,
   onDelCartItem: Function,
+  onUpdateQty: Function,
   updateCart: Function
 }
 
@@ -77,12 +78,14 @@ export default function Home ({
   landImgs, 
   cartItems, 
   onAddToCart,
-  onDelCartItem
+  onDelCartItem,
+  onUpdateQty,
+  updateCart
 }: InferGetServerSidePropsType<typeof getServerSideProps> & AppPropsType) {
   const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(null);
 
   return (
-    <Layout onDelCartItem={onDelCartItem} cartItems={cartItems}>
+    <Layout onUpdateQty={onUpdateQty} updateCart={updateCart} onDelCartItem={onDelCartItem} cartItems={cartItems}>
       <>
         {quickViewProduct &&
           <QuickViewModal onAddToCart={onAddToCart} sku={quickViewProduct.sku} onClose={() => setQuickViewProduct(null)} />

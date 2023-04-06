@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 import { CartPayloadType, AppPropsType, ProductType } from './index';
 
@@ -7,8 +8,11 @@ import Layout from '../components/Layout';
 export default function ShoppingCart({ 
   cartItems,
   isLogin,
+  updateCart,
+  onUpdateQty,
   onDelCartItem
 }: AppPropsType) {
+  const [cookies] = useCookies(['token']);
   const [list, setList] = useState(isLogin ? null : cartItems);
 
   useEffect(() => {
@@ -18,7 +22,7 @@ export default function ShoppingCart({
   }, [isLogin, cartItems])
 
   return (
-    <Layout onDelCartItem={onDelCartItem} cartItems={cartItems} title="Our Story">
+    <Layout onUpdateQty={onUpdateQty} updateCart={updateCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title="Our Story">
       <div className="max-w-4xl py-14 mx-auto flex gap-14">
         {/* My Cart List */}
         <div className="flex-1">
@@ -27,7 +31,7 @@ export default function ShoppingCart({
             <div>
               <div>
                 {cartItems.map((d, i) =>
-                  <Item onDel={onDelCartItem} data={d} key={i} />
+                  <Item onQty={(p: CartPayloadType, o: CartPayloadType) => onUpdateQty(p, o, cookies.token)} onDel={onDelCartItem} data={d} key={i} />
                 )}
               </div>
               <div>
@@ -73,10 +77,11 @@ export default function ShoppingCart({
 
 interface ItemPropsType {
   data: CartPayloadType,
+  onQty: Function,
   onDel: Function
 }
 
-function Item ({ data, onDel }: ItemPropsType) {
+function Item ({ data, onDel, onQty }: ItemPropsType) {
   const [img, setImg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -88,9 +93,20 @@ function Item ({ data, onDel }: ItemPropsType) {
       });
   }, [data])
 
+  const handleUpdateQty = (isAdd: boolean) => {
+    let payload = data;
+    if (isAdd) {
+      payload.qty = data.qty + 1;
+    } else {
+      payload.qty = data.qty - 1;
+    }
+
+    onQty(payload, data);
+  }
+
   return (
     <div className="border-b flex gap-5 pb-8 mb-8 relative group">
-      <button onClick={() => onDel(data)} className="absolute top-0 right-1">x</button>
+      <button onClick={() => onDel(data)} className="absolute top-[-10px] right-[10px]">x</button>
       <img src={img ? img : ""} className="w-32 border" />
       <div className="flex flex-col justify-between flex-1 text-sm">
         <div>
@@ -98,9 +114,13 @@ function Item ({ data, onDel }: ItemPropsType) {
           <div>Color: {data.color}</div>
           <div>Size: {data.size}</div>
         </div>
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           <div className="text-lg">{data.price}</div>
-          <div>Quantity: {data.qty}</div>
+          <div className="flex items-center gap-1 w-fit border">
+            <button onClick={() => handleUpdateQty(false)} disabled={data.qty == 1} className="px-2 py-1">-</button>
+            <div>{data.qty}</div>
+            <button onClick={() => handleUpdateQty(true)} className="px-2 py-1">+</button>
+          </div>
         </div>
       </div>
     </div>

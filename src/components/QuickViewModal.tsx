@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ProductType } from '../pages/index';
 import Link from 'next/link';
+import { useCookies } from 'react-cookie';
 
 interface PropsType {
   onClose: Function,
@@ -14,6 +15,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>("");
   const [quantity, setQuantity] = useState<number>(1);
+  const [cookies] = useCookies(['token']);
 
   useEffect(() => {
     fetchData(sku);
@@ -56,7 +58,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
       qty: quantity
     }
 
-    onAddToCart(payload, onClose);
+    onAddToCart(payload, cookies.token,  onClose);
   }
 
   return (

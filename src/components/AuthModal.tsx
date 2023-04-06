@@ -66,8 +66,6 @@ function Login ({ swap }: CompPropsType) {
 
       const resData = await res.json();
 
-      console.log(resData);
-
       setCookie('token', resData.detail.Token);
       localStorage.setItem("store-user-name", resData.detail.Name);
       setForm({ email: '', password: '' });
@@ -138,6 +136,7 @@ function Signup({ swap }: CompPropsType) {
 
       if (resData.detail == "Sign up complete") {
         setSuccess(true);
+        setForm({ email: '', password: '', fullname: '' })
         setMessage("Sign up complete! Please login with your email and password")
       }
     } catch (err) {

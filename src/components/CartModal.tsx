@@ -7,11 +7,11 @@ interface PropsType {
   isOpen: boolean,
   onClose: Function,
   onDelCartItem: Function,
+  onUpdateQty: Function,
   cartItems: CartPayloadType[]
 }
 
-
-export default function CartModal ({ isOpen, onClose, cartItems, onDelCartItem }: PropsType) {
+export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, onDelCartItem }: PropsType) {
   const [isShown, setIsShown] = useState(isOpen);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function CartModal ({ isOpen, onClose, cartItems, onDelCartItem }
                     <>
                       <div className="space-y-3 px-5 flex-1 overflow-y-scroll">
                         {cartItems.map((d, i) =>
-                          <Item onDel={onDelCartItem} data={d} key={i} />
+                          <Item onQty={onUpdateQty} onDel={onDelCartItem} data={d} key={i} />
                         )}
                       </div>
                       <div className="p-8 text-3xl">
@@ -87,10 +87,11 @@ export default function CartModal ({ isOpen, onClose, cartItems, onDelCartItem }
 
 interface ItemsPropsType {
   data: CartPayloadType,
+  onQty: Function,
   onDel: Function
 }
 
-function Item ({ data, onDel }: ItemsPropsType) {
+function Item ({ data, onDel, onQty }: ItemsPropsType) {
   const [img, setImg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -102,14 +103,29 @@ function Item ({ data, onDel }: ItemsPropsType) {
       });
   }, [data])
 
+  const handleUpdateQty = (isAdd: boolean) => {
+    let payload = data;
+    if (isAdd) {
+      payload.qty = data.qty + 1;
+    } else {
+      payload.qty = data.qty - 1;
+    }
+
+    onQty(payload, data);
+  }
+
   return (
     <div className="border flex gap-2 p-3 relative group">
       <button onClick={() => onDel(data)} className="absolute opacity-0 group-hover:opacity-100 top-1 right-3">x</button>
-      <img src={img ? img : ""} className="w-16" />
-      <div className="text-sm">
+      <img src={img ? img : ""} width="80px" />
+      <div className="space-y-1 text-sm">
         <div>{data.name}</div>
         <div>{data.price}</div>
-        <div>{data.qty}</div>
+        <div className="flex items-center gap-1 w-fit border">
+          <button onClick={() => handleUpdateQty(false)} disabled={data.qty == 1} className="px-2 py-1">-</button>
+          <div>{data.qty}</div>
+          <button onClick={() => handleUpdateQty(true)} className="px-2 py-1">+</button>
+        </div>
       </div>
     </div>
   )

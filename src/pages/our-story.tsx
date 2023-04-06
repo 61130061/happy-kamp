@@ -18,10 +18,12 @@ export const getServerSideProps: GetServerSideProps<{ img: string }> = async (co
 export default function OurStory({ 
   img,
   cartItems,
+  updateCart,
+  onUpdateQty,
   onDelCartItem
 }: InferGetServerSidePropsType<typeof getServerSideProps> & AppPropsType) {
   return (
-    <Layout onDelCartItem={onDelCartItem} cartItems={cartItems} title="Our Story">
+    <Layout onUpdateQty={onUpdateQty} updateCart={updateCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title="Our Story">
       <>
         <img className="object-cover w-full h-[645px]" src={img} />
 

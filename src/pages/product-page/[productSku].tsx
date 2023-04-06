@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
+import { useCookies } from 'react-cookie';
 
 import { ProductType, AppPropsType } from '../index';
 
@@ -62,7 +63,9 @@ export default function ProductPage({
   product,
   relatedProducts,
   cartItems,
+  updateCart,
   onAddToCart,
+  onUpdateQty,
   onDelCartItem
 }: InferGetServerSidePropsType<typeof getServerSideProps> & AppPropsType) {
   const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(null);
@@ -70,6 +73,7 @@ export default function ProductPage({
   const [selectedSize, setSelectedSize] = useState<string | null>("");
   const [quantity, setQuantity] = useState<number>(1);
   const [autoCart, setAutoCart] = useState<boolean>(false);
+  const [cookies] = useCookies(['token']);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -86,14 +90,14 @@ export default function ProductPage({
       qty: quantity
     }
 
-    onAddToCart(payload, () => {
+    onAddToCart(payload, cookies.token,() => {
       // TODO: Fix auto open cart working once
       setAutoCart(true)
     });
   }
 
   return (
-    <Layout onOpenCart={autoCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title={product.name}>
+    <Layout onUpdateQty={onUpdateQty} updateCart={updateCart} onOpenCart={autoCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title={product.name}>
       {quickViewProduct &&
         <QuickViewModal onAddToCart={onAddToCart} sku={quickViewProduct.sku} onClose={() => setQuickViewProduct(null)} />
       }

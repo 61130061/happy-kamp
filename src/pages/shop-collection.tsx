@@ -38,6 +38,8 @@ export default function ShopCollection ({
   filters,
   cartItems,
   onAddToCart,
+  updateCart,
+  onUpdateQty,
   onDelCartItem
 }: InferGetServerSidePropsType<typeof getServerSideProps> & AppPropsType) {
   const getMaxPrice = () => {
@@ -50,10 +52,9 @@ export default function ShopCollection ({
 
   const [price, setPrice] = useState([getMinPrice(), getMaxPrice()]);
   const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(null);
-  const [colors, setColors] = useState([]);
 
   return (
-    <Layout onDelCartItem={onDelCartItem} cartItems={cartItems} title="Shop Collection">
+    <Layout onUpdateQty={onUpdateQty} updateCart={updateCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title="Shop Collection">
       {quickViewProduct &&
         <QuickViewModal onAddToCart={onAddToCart} sku={quickViewProduct.sku} onClose={() => setQuickViewProduct(null)} />
       }

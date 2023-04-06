@@ -1,5 +1,6 @@
 import { useState, useEffect, ReactNode } from 'react';
 import Head from 'next/head';
+import { useCookies } from 'react-cookie';
 
 import { CartPayloadType } from '@/pages';
 
@@ -13,11 +14,18 @@ interface PropsType {
   children: ReactNode,
   onDelCartItem: Function,
   onOpenCart?: boolean,
+  onUpdateQty: Function,
+  updateCart: Function,
   cartItems: CartPayloadType[]
 }
 
-export default function Layout ({ title, onOpenCart, children, onDelCartItem, cartItems }: PropsType) {
+export default function Layout ({ title, onOpenCart, children, onDelCartItem, cartItems, updateCart, onUpdateQty }: PropsType) {
+  const [cookies] = useCookies(['token']);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    updateCart(cookies.token)
+  }, [cookies])
   
   useEffect(() => {
     if (onOpenCart) setIsCartOpen(onOpenCart);
@@ -34,7 +42,7 @@ export default function Layout ({ title, onOpenCart, children, onDelCartItem, ca
       </Head>
 
       <main>
-        <CartModal onDelCartItem={onDelCartItem} cartItems={cartItems} isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        <CartModal onUpdateQty={(p: CartPayloadType, o: CartPayloadType) => onUpdateQty(p, o, cookies.token)} onDelCartItem={(d: CartPayloadType) => onDelCartItem(d, cookies.token)} cartItems={cartItems} isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         <Annoucement />
         <Navbar cartNumber={cartItems.length} onOpenCart={() => setIsCartOpen(true)} />
         {children}

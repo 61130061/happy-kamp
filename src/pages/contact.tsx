@@ -2,10 +2,15 @@ import Layout from '../components/Layout';
 
 import { AppPropsType } from './index';
 
-export default function Contact ({ cartItems, onDelCartItem }: AppPropsType) {
+export default function Contact ({ 
+  cartItems, 
+  onDelCartItem, 
+  updateCart,
+  onUpdateQty
+}: AppPropsType) {
 
   return (
-    <Layout onDelCartItem={onDelCartItem} cartItems={cartItems} title="Contact">
+    <Layout onUpdateQty={onUpdateQty} updateCart={updateCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title="Contact">
       <div className="max-w-3xl mx-auto">
         <div>
           <div className="text-3xl text-center my-10">Contact Us</div>
