@@ -43,7 +43,7 @@ export default function Layout ({ title, onOpenCart, children, onDelCartItem, ca
 
       <main>
         <CartModal onUpdateQty={(p: CartPayloadType, o: CartPayloadType) => onUpdateQty(p, o, cookies.token)} onDelCartItem={(d: CartPayloadType) => onDelCartItem(d, cookies.token)} cartItems={cartItems} isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-        <Annoucement />
+        <Annoucement announcements={['Free Shipping Over $50', 'Get 10% Off - Use Coupon Code HAPPY123']} />
         <Navbar cartNumber={cartItems.length} onOpenCart={() => setIsCartOpen(true)} />
         {children}
         <Footer />
