@@ -68,7 +68,7 @@ export default function App({ Component, pageProps }: AppProps) {
       } else {
         newCart.cart_list.push(payload);
       }
-      const newSubTotal = newCart.cart_list.reduce((acc, ele) => acc + (ele.price * ele.qty), 0)
+      const newSubTotal = newCart.cart_list.reduce((acc, ele) => acc + (ele.discountedPrice * ele.qty), 0)
       newCart.sub_total = newSubTotal;
       newCart.total = newSubTotal;
       localStorage.setItem("cart-items", JSON.stringify(newCart));
@@ -138,7 +138,7 @@ export default function App({ Component, pageProps }: AppProps) {
       let newCart = cartItems;
       newCart.cart_list[index].qty = payload.qty;
 
-      const newSubTotal = newCart.cart_list.reduce((acc, ele) => acc + (ele.price * ele.qty), 0)
+      const newSubTotal = newCart.cart_list.reduce((acc, ele) => acc + (ele.discountedPrice * ele.qty), 0)
       newCart.sub_total = newSubTotal;
       newCart.total = newSubTotal;
       localStorage.setItem("cart-items", JSON.stringify(newCart));
