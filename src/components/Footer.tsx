@@ -6,7 +6,7 @@ export default function Footer() {
     <>
       <div className="border-t border-primary-1 mt-3 mb-[37px]" />{/* Divider */}
       <div className="max-w-4xl mx-auto px-5">
-        <div className="text-center text-[30px] leading-[1.6em] font-[200] tracking-widest mb-10">Logo</div>
+        <div className="text-center text-[30px] leading-[1.6em] font-[200] tracking-widest mb-10">happy kids</div>
 
         <div className="flex flex-col items-center sm:flex-row text-sm gap-10 sm:gap-5 sm:items-start justify-between mb-[42px]">
           {/* 1st Manu */}
