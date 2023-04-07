@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
+import Image from 'next/image';
 
 import AuthModal from './AuthModal';
 
@@ -36,7 +37,7 @@ export default function Navbar ({ onOpenCart, cartNumber }: PropsType) {
       <nav className="flex md:flex-col items-center justify-between px-3 md:px-0 border-b border-gray-200">
         <AuthModal isOpen={showAuth} onClose={() => setShowAuth(false)} />
         <Link href="/">
-          <div className="text-center text-4xl md:text-7xl font-[200] tracking-[0.2em] my-3 md:my-10">Logo</div>
+          <div className="md:text-center text-3xl md:text-6xl font-[200] tracking-widest md:tracking-[0.2em] my-3 md:my-10">happy kids</div>
         </Link>
 
         {/* Big screen menu */}
@@ -60,7 +61,7 @@ export default function Navbar ({ onOpenCart, cartNumber }: PropsType) {
           {/* Right menu */}
           <div className="flex items-center gap-2">
             <button onClick={() => isLogin ? removeCookie('token') : setShowAuth(true)} className="flex items-center gap-3 p-3">
-              <img src="/icon/user-svgrepo-com.svg" width="22px" />
+              <Image src="/icon/user-svgrepo-com.svg" width={22} height={22} alt="user" />
               <div>{isLogin ? localStorage.getItem("store-user-name") : "Login"}</div>
             </button>
             <button onClick={() => onOpenCart()} className="flex gap-3 p-3">Cart <span>[{cartNumber}]</span></button>
@@ -68,7 +69,7 @@ export default function Navbar ({ onOpenCart, cartNumber }: PropsType) {
         </div>
 
         {/* Burger Button for small screen */}
-        <div className="flex md:hidden items-center mt-2">
+        <div className="flex md:hidden items-center mt-1">
           {/* Fix badge number with more bueatiful UI */}
           <button onClick={() => onOpenCart()} className="flex gap-3 p-3 text-sm">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-400">
@@ -107,7 +108,7 @@ export default function Navbar ({ onOpenCart, cartNumber }: PropsType) {
         </div>
         <div className="flex items-center gap-2 py-2">
           <button onClick={() => isLogin ? removeCookie('token') : setShowAuth(true)} className="flex items-center gap-3 px-8 p-3 w-full">
-            <img src="/icon/user-svgrepo-com.svg" width="22px" />
+            <Image src="/icon/user-svgrepo-com.svg" width={22} height={22} alt="user" />
             <div>{isLogin ? localStorage.getItem("store-user-name") : "Login"}</div>
           </button>
         </div>

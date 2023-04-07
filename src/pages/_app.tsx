@@ -1,15 +1,29 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { CookiesProvider } from 'react-cookie';
 
 import { CartPayloadType, CartType } from '.'; 
 
+const initCartItems = { cart_list: [], shipping: 0, sub_total: 0, total: 0 }
+
 export default function App({ Component, pageProps }: AppProps) {
-  const initCartItems = { cart_list: [], shipping: 0, sub_total: 0, total: 0 }
   const [cartItems, setCartItems] = useState<CartType>(initCartItems);
 
-  const updateCart = async (cookie: string | null) => {
+  useEffect(() => {
+    const initStorageKey = Object.keys(initCartItems);
+    const storage = localStorage.getItem("cart-items");
+
+    if (!storage) {
+      localStorage.setItem("cart-items", JSON.stringify(initCartItems));
+    } else {
+      if (initStorageKey.length !== Object.keys(JSON.parse(storage)).length) {
+        localStorage.setItem("cart-items", JSON.stringify(initCartItems));
+      }
+    }
+  }, [])
+
+  const updateCart = useCallback(async (cookie: string | null) => {
     if (!cookie) {
       const cart = localStorage.getItem("cart-items");
       if (!cart) localStorage.setItem("cart-items", JSON.stringify(initCartItems));
@@ -42,7 +56,7 @@ export default function App({ Component, pageProps }: AppProps) {
       // Update fetch data from api to cartItems
       setCartItems(resData.detail);
     }
-  }
+  }, [])
 
   const onAddToCart = async (payload: CartPayloadType, cookie: string | null, onCallback: Function) => {
     if (!cookie) {

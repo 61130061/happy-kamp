@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 
 interface PropsType {
   images: string[]
@@ -8,19 +9,21 @@ export default function Carousel({ images }: PropsType) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
 
+  const goToNext = useCallback(() => {
+    setCurrentIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1)
+  }, [currentIndex, images.length]);
+
   useEffect(() => {
     const id = window.setInterval(() => {
       goToNext()
     }, 5000)
 
-    setIntervalId(id)
-
     return () => {
-      if (intervalId) {
-        window.clearInterval(intervalId)
+      if (id) {
+        window.clearInterval(id)
       }
     }
-  }, [images.length])
+  }, [images.length, goToNext])
   
   function goToIndex(index: number) {
     setCurrentIndex(index)
@@ -28,10 +31,6 @@ export default function Carousel({ images }: PropsType) {
 
   function goToPrevious() {
     setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1)
-  }
-
-  function goToNext() {
-    setCurrentIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1)
   }
 
   return (
@@ -43,7 +42,7 @@ export default function Carousel({ images }: PropsType) {
             className={`carousel-item absolute w-full h-full top-0 left-0 opacity-0 transition-opacity duration-500 ease-in-out ${currentIndex === index ? 'opacity-100' : ''
               }`}
           >
-            <img src={image} alt={`Image ${index}`} className="object-cover w-full h-full" />
+            <Image width={640} height={640} src={image} alt={`Image ${index}`} className="object-cover w-full h-full" />
           </div>
         ))}
       </div>

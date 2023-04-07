@@ -14,11 +14,11 @@ interface AuthPayloadType {
 
 export default function AuthModal ({ isOpen, onClose }: PropsType) {
   const [isSignup, setIsSignup] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  const [cookies] = useCookies(['token']);
 
   useEffect(() => {
     if (cookies.token) onClose()
-  }, [cookies])
+  }, [cookies, onClose])
 
   return (
     <div className={`flex items-center justify-center z-[999] top-0 right-0 left-0 bottom-0 fixed h-screen w-screen overflow-hidden bg-white${isOpen ? "" : " hidden"}`}>

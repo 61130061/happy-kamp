@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -26,9 +27,9 @@ export default function Footer() {
 
           {/* Social Media */}
           <div className="flex gap-10 order-1 sm:order-none">
-            <img src={'/icon/social/facebook-svgrepo-com.svg'} width="20px" height="20px" />
-            <img src={'/icon/social/pinterest-svgrepo-com.svg'} width="20px" height="20px" />
-            <img src={'/icon/social/instagram-svgrepo-com.svg'} width="20px" height="20px" />
+            <Image alt="facebook" src="/icon/social/facebook-svgrepo-com.svg" width={20} height={20} />
+            <Image alt="pinterest" src="/icon/social/pinterest-svgrepo-com.svg" width={20} height={20} />
+            <Image alt="instagram" src="/icon/social/instagram-svgrepo-com.svg" width={20} height={20} />
           </div>
 
           {/* 2nd Menu */}

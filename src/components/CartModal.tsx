@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { CartPayloadType, ProductType, CartType } from '../pages/index';
 
@@ -118,7 +119,7 @@ function Item ({ data, onDel, onQty }: ItemsPropsType) {
   return (
     <div className="border flex gap-2 p-3 relative group">
       <button onClick={() => onDel(data)} className="absolute opacity-0 group-hover:opacity-100 top-1 right-3">x</button>
-      <img src={img ? img : ""} width="80px" />
+      <Image alt={img ? img : "/image-not-found.jpg"} src={img ? img : "/image-not-found.jpg"} width={80} height={80} />
       <div className="space-y-1 text-sm">
         <div>{data.name}</div>
         <div>{data.price}</div>

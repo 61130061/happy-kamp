@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import Image from 'next/image';
 
 import { CartPayloadType, AppPropsType, ProductType } from './index';
 
@@ -13,11 +14,11 @@ export default function ShoppingCart({
   onDelCartItem
 }: AppPropsType) {
   const [cookies] = useCookies(['token']);
-  const [list, setList] = useState(isLogin ? null : cartItems);
+  const [list, setList] = useState(isLogin ? null : cartItems.cart_list);
 
   useEffect(() => {
     if (!isLogin) {
-      setList(cartItems);
+      setList(cartItems.cart_list);
     }
   }, [isLogin, cartItems])
 
@@ -27,7 +28,7 @@ export default function ShoppingCart({
         {/* My Cart List */}
         <div className="flex-1 p-5 md:p-0">
           <div className="text-lg border-b font-[300] border-black pb-4 mb-8">My cart</div>
-          {cartItems.cart_list.length > 0 ?
+          {list && list.length > 0 ?
             <div>
               <div>
                 {cartItems.cart_list.map((d, i) =>
@@ -46,7 +47,7 @@ export default function ShoppingCart({
           }
         </div>
         {/* Order Summary */}
-        {cartItems.cart_list.length > 0 &&
+        {list && list.length > 0 &&
           <div className="p-5 md:p-0 md:w-[30%]">
             <div className="text-lg border-b font-[300] border-black pb-4 mb-8">Order summary</div>
             <div className="border-b border-black pb-4 mb-4">
@@ -107,7 +108,7 @@ function Item ({ data, onDel, onQty }: ItemPropsType) {
   return (
     <div className="border-b flex gap-5 pb-8 mb-8 relative group">
       <button onClick={() => onDel(data)} className="absolute top-[-10px] right-[10px]">x</button>
-      <img src={img ? img : ""} className="w-32 border" />
+      <Image width={128} height={128} alt={img ? img : '/image-not-found.jpg'} src={img ? img : "/image-not-found.jpg"} className="w-32 border" />
       <div className="flex flex-col justify-between flex-1 text-sm">
         <div>
           <div className="text-lg mb-1">{data.name}</div>

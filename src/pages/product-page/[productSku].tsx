@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 
 import { ProductType, AppPropsType } from '../index';
@@ -154,7 +155,7 @@ export default function ProductPage({
             {relatedProducts.filter(item => item.sku != product.sku).map((d, i) =>
               <div key={i} className="snap-start border border-black text-center">
                 <Link href={"/product-page/" + d.sku}>
-                  <img className="min-w-[162px]" src={d.media[0].url} />
+                  <Image width={162} height={162} alt={d.media[0].title} className="min-w-[162px]" src={d.media[0].url} />
                 </Link>
                 <div className="p-2">
                   <Link href={"/product-page/" + d.sku}>

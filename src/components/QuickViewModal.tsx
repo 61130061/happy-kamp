@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ProductType } from '../pages/index';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
+import Image from 'next/image'
 
 interface PropsType {
   onClose: Function,
@@ -19,7 +20,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
 
   useEffect(() => {
     fetchData(sku);
-  }, [])
+  }, [sku])
 
   const fetchData = async (sku: string) => {
     try {
@@ -80,7 +81,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
               </button>
               {/* Feature image */}
               <div className="flex-1 flex justify-center">
-                <img className="max-w-md min-w-[320px]" src={product.media[0].fullUrl} />
+                <Image width={640} height={320} alt={product.media[0].title} className="max-w-md min-w-[320px]" src={product.media[0].fullUrl} />
               </div>
 
               {/* Add to Cart form */}

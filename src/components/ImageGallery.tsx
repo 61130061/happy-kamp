@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface PropsType {
   images: string[]
@@ -12,7 +13,7 @@ export default function ImageGallery({ images }: PropsType) {
     if (!images.includes(selectedImage)) {
       setSelectedImage(images[0]);
     }
-  }, [images])
+  }, [images, selectedImage])
 
   const handleImageClick = (image: string) => {
     setSelectedImage(image);
@@ -20,10 +21,12 @@ export default function ImageGallery({ images }: PropsType) {
 
   return (
     <div className="flex flex-col">
-      <img src={selectedImage} alt="Selected image" className="w-full mb-2" />
+      <Image width={320} height={320} src={selectedImage} alt="Selected image" className="w-full mb-2" />
       <div className="flex items-center gap-3">
         {images.map((image, i) => (
-          <img
+          <Image
+            width={48}
+            height={48}
             key={i}
             src={image}
             alt="Thumbnail"

@@ -1,5 +1,6 @@
 import { ProductType } from '../pages/index'
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface PropsType {
   product: ProductType,
@@ -13,7 +14,7 @@ export default function ProductCard({ product, onOpenQuickView, onAddToCart }: P
     <div className="group left-[10px] snap-start px-5 min-w-[320px]">
       <div className="relative mb-3">
         <Link className="flex justify-center" href={"/product-page/" + product.sku}>
-          <img src={product.media[0].url} width="320px" />
+          <Image alt={product.media[0].title} height={320} src={product.media[0].url} width={320} />
         </Link>
         <button onClick={() => onOpenQuickView()} className="w-full bg-white bg-opacity-50 py-3 absolute bottom-0 transition-all duration-300 transform translate-y-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 z-10">
           Quick View
