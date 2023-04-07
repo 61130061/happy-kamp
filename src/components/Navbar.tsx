@@ -89,7 +89,7 @@ export default function Navbar ({ onOpenCart, cartNumber }: PropsType) {
         </div>
       </nav>
 
-      <div className={`absolute md:hidden w-full top-auto left-auto right-auto bottom-auto bg-white z-[99] border-b transition-all overflow-hidden duration-300 ease-in-out ${toggleMenu ? 'max-h-screen' : 'max-h-0'
+      <div className={`absolute md:hidden w-full top-auto left-auto right-auto bottom-auto bg-white z-[50] border-b transition-all overflow-hidden duration-300 ease-in-out ${toggleMenu ? 'max-h-screen' : 'max-h-0'
         }`}>
         <div className="flex flex-col border-b py-2">
           <Link href="/">
