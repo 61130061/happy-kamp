@@ -31,7 +31,7 @@ export default function ProductCard({ product, onOpenQuickView, onAddToCart }: P
           <div className="flex justify-center py-3 gap-2">
             <div className={product.price === product.discountedPrice ? "" : "line-through"}>{product.formattedPrice}</div>
             {product.price !== product.discountedPrice &&
-              <div>{product.formattedPrice}</div>
+              <div>{product.discountedPrice}</div>
             }
           </div>
         </Link>

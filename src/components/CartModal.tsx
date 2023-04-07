@@ -55,7 +55,7 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
                   {/* TODO: Figure out why cartItems undefined causing an error */}
                   {cartItems.cart_list && cartItems.cart_list.length > 0 ?
                     <>
-                      <div className="space-y-3 px-5 pt-8 flex-1 overflow-y-scroll">
+                      <div className="space-y-3 px-5 py-8 flex-1 overflow-y-scroll">
                         {cartItems.cart_list.map((d, i) =>
                           <Item onQty={onUpdateQty} onDel={onDelCartItem} data={d} key={i} />
                         )}
@@ -63,7 +63,7 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
                       <div className="px-8 py-5 text-3xl">
                         <div>Subtotal</div>
                         <div>$ {cartItems.sub_total.toFixed(2)}</div>
-                        <Link href="/shopping-cart"><button className="w-full text-sm p-3 bg-primary-1 text-white mt-10">View Cart</button></Link>
+                        <Link href="/shopping-cart"><button className="w-full text-sm p-3 bg-primary-1 text-white mt-8">View Cart</button></Link>
                       </div>
                     </> :
                     <div className="text-center">Cart is empty</div>
@@ -122,7 +122,12 @@ function Item ({ data, onDel, onQty }: ItemsPropsType) {
       <Image alt={img ? img : "/image-not-found.jpg"} src={img ? img : "/image-not-found.jpg"} width={80} height={80} />
       <div className="space-y-1 text-sm">
         <div>{data.name}</div>
-        <div>{data.price}</div>
+        <div className="flex gap-1">
+          {data.price !== data.discountedPrice && 
+            <div className="line-through">{data.price}$</div>
+          }
+          <div>{data.discountedPrice}$</div>
+        </div>
         <div className="flex items-center gap-1 w-fit border">
           <button onClick={() => handleUpdateQty(false)} disabled={data.qty == 1} className="px-2 py-1">-</button>
           <div>{data.qty}</div>

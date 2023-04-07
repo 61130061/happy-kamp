@@ -50,16 +50,18 @@ export default function ShoppingCart({
         {list && list.length > 0 &&
           <div className="p-5 md:p-0 md:w-[30%]">
             <div className="text-lg border-b font-[300] border-black pb-4 mb-8">Order summary</div>
-            <div className="border-b border-black pb-4 mb-4">
+            <div className="space-y-2 border-b border-black pb-4 mb-4 text-sm">
               <div className="flex justify-between">
                 <div>Subtotal</div>
                 <div>{cartItems.sub_total.toFixed(2)}</div>
               </div>
-              <div className="flex justify-between">
-                <div>Shipping</div>
-                <div>FREE</div>
+              <div>
+                <div className="flex justify-between">
+                  <div>Shipping</div>
+                  <div>FREE</div>
+                </div>
+                <div className="underline">Bangkok, Thailand</div>
               </div>
-              <div>Bangkok, Thailand</div>
             </div>
             <div className="flex justify-between mb-8">
               <div>Total</div>
@@ -116,7 +118,12 @@ function Item ({ data, onDel, onQty }: ItemPropsType) {
           <div>Size: {data.size}</div>
         </div>
         <div className="flex items-center justify-between">
-          <div className="text-lg">{data.price}</div>
+          <div className="flex gap-1">
+            {data.price !== data.discountedPrice &&
+              <div className="text-lg line-through">{data.price}$</div>
+            }
+            <div className="text-lg">{data.discountedPrice}$</div>
+          </div>
           <div className="flex items-center gap-1 w-fit border">
             <button onClick={() => handleUpdateQty(false)} disabled={data.qty == 1} className="px-2 py-1">-</button>
             <div>{data.qty}</div>
