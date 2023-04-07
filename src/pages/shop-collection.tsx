@@ -109,8 +109,9 @@ export default function ShopCollection ({
       }
       <div className="max-w-7xl mx-auto">
         <div className="text-3xl text-center my-10">Shop Collection</div>
-        <div className="flex mb-10">
-          <div className="w-[240px] p-[20px]">
+        <div className="md:flex mb-10">
+
+          <div className="w-full md:w-[180px] lg:w-[240px] p-[20px]">
             <div onClick={() => console.log(filter)} className="text-2xl border-b pb-[18px]">Filter by</div>
             {/* Collectionn Filter */}
             <Accordion title="Collection">
@@ -174,7 +175,7 @@ export default function ShopCollection ({
             }
           </div>
 
-          <div className="flex-1 grid grid-cols-3 gap-y-5">
+          <div className="flex-1 grid sm:grid-cols-2 lg:grid-cols-3 gap-y-5">
             {showProducts.map((d, i) =>
               <ProductCard onAddToCart={() => setQuickViewProduct(d)} key={i} product={d} onOpenQuickView={() => setQuickViewProduct(d)} />
             )}

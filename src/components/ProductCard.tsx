@@ -10,10 +10,10 @@ interface PropsType {
 export default function ProductCard({ product, onOpenQuickView, onAddToCart }: PropsType) {
 
   return (
-    <div className="group left-[10px] snap-start px-5">
+    <div className="group left-[10px] snap-start px-5 min-w-[320px]">
       <div className="relative mb-3">
-        <Link href={"/product-page/" + product.sku}>
-          <img className="min-w-[320px]" src={product.media[0].url} />
+        <Link className="flex justify-center" href={"/product-page/" + product.sku}>
+          <img src={product.media[0].url} width="320px" />
         </Link>
         <button onClick={() => onOpenQuickView()} className="w-full bg-white bg-opacity-50 py-3 absolute bottom-0 transition-all duration-300 transform translate-y-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 z-10">
           Quick View

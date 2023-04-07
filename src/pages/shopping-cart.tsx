@@ -23,10 +23,10 @@ export default function ShoppingCart({
 
   return (
     <Layout onUpdateQty={onUpdateQty} updateCart={updateCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title="Our Story">
-      <div className="max-w-4xl py-14 mx-auto flex gap-14">
+      <div className="max-w-4xl py-14 mx-auto md:flex gap-14">
         {/* My Cart List */}
-        <div className="flex-1">
-          <div className="text-lg border-b border-black pb-4 mb-8">My cart</div>
+        <div className="flex-1 p-5 md:p-0">
+          <div className="text-lg border-b font-[300] border-black pb-4 mb-8">My cart</div>
           {cartItems.length > 0 ?
             <div>
               <div>
@@ -47,8 +47,8 @@ export default function ShoppingCart({
         </div>
         {/* Order Summary */}
         {cartItems.length > 0 &&
-          <div className="w-[30%]">
-            <div className="text-lg border-b border-black pb-4 mb-8">Order summary</div>
+          <div className="p-5 md:p-0 md:w-[30%]">
+            <div className="text-lg border-b font-[300] border-black pb-4 mb-8">Order summary</div>
             <div className="border-b border-black pb-4 mb-4">
               <div className="flex justify-between">
                 <div>Subtotal</div>
