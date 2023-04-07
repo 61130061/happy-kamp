@@ -1,18 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { CookiesProvider } from 'react-cookie';
 
-import { CartPayloadType  } from '.'; 
+import { CartPayloadType, CartType } from '.'; 
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [cartItems, setCartItems] = useState<CartPayloadType[]>([]);
+  const initCartItems = { cart_list: [], shipping: 0, sub_total: 0, total: 0 }
+  const [cartItems, setCartItems] = useState<CartType>(initCartItems);
 
   const updateCart = async (cookie: string | null) => {
     if (!cookie) {
       const cart = localStorage.getItem("cart-items");
-      if (!cart) localStorage.setItem("cart-items", "[]");
-      const stored = JSON.parse(localStorage.getItem("cart-items") || "[]")
+      if (!cart) localStorage.setItem("cart-items", JSON.stringify(initCartItems));
+      const stored = JSON.parse(localStorage.getItem("cart-items") || JSON.stringify(initCartItems))
       setCartItems(stored);
     } else {
       /*
@@ -39,21 +40,24 @@ export default function App({ Component, pageProps }: AppProps) {
       const resData = await res.json();
 
       // Update fetch data from api to cartItems
-      setCartItems(resData.detail.cart_list);
+      setCartItems(resData.detail);
     }
   }
 
   const onAddToCart = async (payload: CartPayloadType, cookie: string | null, onCallback: Function) => {
     if (!cookie) {
-      const index = cartItems.findIndex((obj) => obj.name == payload.name && obj.size == payload.size && obj.sku == payload.sku && obj.color == payload.color);
+      const index = cartItems.cart_list.findIndex((obj) => obj.name == payload.name && obj.size == payload.size && obj.sku == payload.sku && obj.color == payload.color);
 
+      const newCart = cartItems;
       if (index > -1) {
-        const newCart = cartItems;
-        newCart[index].qty+=payload.qty;
-        localStorage.setItem("cart-items", JSON.stringify(newCart));
+        newCart.cart_list[index].qty += payload.qty;
       } else {
-        localStorage.setItem("cart-items", JSON.stringify([...cartItems, payload]));
+        newCart.cart_list.push(payload);
       }
+      const newSubTotal = newCart.cart_list.reduce((acc, ele) => acc + (ele.price * ele.qty), 0)
+      newCart.sub_total = newSubTotal;
+      newCart.total = newSubTotal;
+      localStorage.setItem("cart-items", JSON.stringify(newCart));
       
       updateCart(null);
     } else {
@@ -81,7 +85,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const onDelCartItem = async (payload: CartPayloadType, cookie: string | null) => {
     if (!cookie) {
-      const newCart = cartItems.filter(item => item != payload)
+      const newCart = cartItems;
+      newCart.cart_list = newCart.cart_list.filter(item => item != payload);
+      const newSubTotal = newCart.cart_list.reduce((acc, ele) => acc + (ele.price * ele.qty), 0)
+      newCart.sub_total = newSubTotal;
+      newCart.total = newSubTotal;
       localStorage.setItem("cart-items", JSON.stringify(newCart));
       updateCart(null);
     } else {
@@ -108,13 +116,17 @@ export default function App({ Component, pageProps }: AppProps) {
   const onUpdateQty = async (payload: CartPayloadType, old: CartPayloadType, cookie: string | null) => {
     if (!cookie) {
       // TODO: Fix duplicate item in cart
-      const index = cartItems.findIndex((obj) => obj === old);
+      const index = cartItems.cart_list.findIndex((obj) => obj === old);
 
       // TODO: what to do when item not found
       if (index === -1) return
 
       let newCart = cartItems;
-      newCart[index].qty = payload.qty;
+      newCart.cart_list[index].qty = payload.qty;
+
+      const newSubTotal = newCart.cart_list.reduce((acc, ele) => acc + (ele.price * ele.qty), 0)
+      newCart.sub_total = newSubTotal;
+      newCart.total = newSubTotal;
       localStorage.setItem("cart-items", JSON.stringify(newCart));
       updateCart(null);
     } else {

@@ -2,7 +2,7 @@ import { useState, useEffect, ReactNode } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 
-import { CartPayloadType } from '@/pages';
+import { CartPayloadType, CartType } from '@/pages';
 
 import Footer from './Footer';
 import Navbar from './Navbar';
@@ -16,7 +16,7 @@ interface PropsType {
   onOpenCart?: boolean,
   onUpdateQty: Function,
   updateCart: Function,
-  cartItems: CartPayloadType[]
+  cartItems: CartType 
 }
 
 export default function Layout ({ title, onOpenCart, children, onDelCartItem, cartItems, updateCart, onUpdateQty }: PropsType) {
@@ -45,7 +45,7 @@ export default function Layout ({ title, onOpenCart, children, onDelCartItem, ca
         <CartModal onUpdateQty={(p: CartPayloadType, o: CartPayloadType) => onUpdateQty(p, o, cookies.token)} onDelCartItem={(d: CartPayloadType) => onDelCartItem(d, cookies.token)} cartItems={cartItems} isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         <Annoucement announcements={['Free Shipping Over $50', 'Get 10% Off - Use Coupon Code HAPPY123']} />
         {/* TODO: Figure out why cartItems undefined causing an error */}
-        <Navbar cartNumber={cartItems ? cartItems.length : 0} onOpenCart={() => setIsCartOpen(true)} />
+        <Navbar cartNumber={cartItems ? cartItems.cart_list.length : 0} onOpenCart={() => setIsCartOpen(true)} />
         {children}
         <Footer />
       </main>

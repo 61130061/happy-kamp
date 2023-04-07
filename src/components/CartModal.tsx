@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-import { CartPayloadType, ProductType } from '../pages/index';
+import { CartPayloadType, ProductType, CartType } from '../pages/index';
 
 interface PropsType {
   isOpen: boolean,
   onClose: Function,
   onDelCartItem: Function,
   onUpdateQty: Function,
-  cartItems: CartPayloadType[]
+  cartItems: CartType
 }
 
 export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, onDelCartItem }: PropsType) {
@@ -52,16 +52,16 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
                 </div>
                 <div className="mt-8 flex flex-col h-screen justify-between flex-1">
                   {/* TODO: Figure out why cartItems undefined causing an error */}
-                  {cartItems && cartItems.length > 0 ?
+                  {cartItems.cart_list && cartItems.cart_list.length > 0 ?
                     <>
                       <div className="space-y-3 px-5 flex-1 overflow-y-scroll">
-                        {cartItems.map((d, i) =>
+                        {cartItems.cart_list.map((d, i) =>
                           <Item onQty={onUpdateQty} onDel={onDelCartItem} data={d} key={i} />
                         )}
                       </div>
                       <div className="p-8 text-3xl">
                         <div>Subtotal</div>
-                        <div>$ {cartItems.reduce((acc, ele) => acc+(ele.price * ele.qty), 0).toFixed(2)}</div>
+                        <div>$ {cartItems.sub_total.toFixed(2)}</div>
                         <Link href="/shopping-cart"><button className="w-full text-sm p-3 bg-primary-1 text-white mt-10">View Cart</button></Link>
                       </div>
                     </> :

@@ -27,10 +27,10 @@ export default function ShoppingCart({
         {/* My Cart List */}
         <div className="flex-1 p-5 md:p-0">
           <div className="text-lg border-b font-[300] border-black pb-4 mb-8">My cart</div>
-          {cartItems.length > 0 ?
+          {cartItems.cart_list.length > 0 ?
             <div>
               <div>
-                {cartItems.map((d, i) =>
+                {cartItems.cart_list.map((d, i) =>
                   <Item onQty={(p: CartPayloadType, o: CartPayloadType) => onUpdateQty(p, o, cookies.token)} onDel={(d: CartPayloadType) => onDelCartItem(d, cookies.token)} data={d} key={i} />
                 )}
               </div>
@@ -46,13 +46,13 @@ export default function ShoppingCart({
           }
         </div>
         {/* Order Summary */}
-        {cartItems.length > 0 &&
+        {cartItems.cart_list.length > 0 &&
           <div className="p-5 md:p-0 md:w-[30%]">
             <div className="text-lg border-b font-[300] border-black pb-4 mb-8">Order summary</div>
             <div className="border-b border-black pb-4 mb-4">
               <div className="flex justify-between">
                 <div>Subtotal</div>
-                <div>{cartItems.reduce((acc, ele) => acc + (ele.price * ele.qty), 0).toFixed(2)}</div>
+                <div>{cartItems.sub_total.toFixed(2)}</div>
               </div>
               <div className="flex justify-between">
                 <div>Shipping</div>
@@ -62,7 +62,7 @@ export default function ShoppingCart({
             </div>
             <div className="flex justify-between mb-8">
               <div>Total</div>
-              <div>{cartItems.reduce((acc, ele) => acc + (ele.price * ele.qty), 0).toFixed(2)}</div>
+              <div>{cartItems.total.toFixed(2)}</div>
             </div>
             <div className="flex flex-col gap-5">
               <button className="bg-black text-white text-sm py-3">Checkout</button>

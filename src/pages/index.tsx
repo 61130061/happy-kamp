@@ -8,7 +8,7 @@ import QuickViewModal from '../components/QuickViewModal';
 
 export interface AppPropsType {
   isLogin: boolean,
-  cartItems: CartPayloadType[],
+  cartItems: CartType,
   onAddToCart: Function,
   onDelCartItem: Function,
   onUpdateQty: Function,
@@ -56,6 +56,13 @@ export interface CartPayloadType {
   color: string,
   size: string,
   qty: number
+}
+
+export interface CartType {
+  cart_list: CartPayloadType[],
+  shipping: number,
+  sub_total: number,
+  total: number
 }
 
 export const getServerSideProps: GetServerSideProps<{ newProducts: ProductType[], landImgs: string[] }> = async (context) => {
