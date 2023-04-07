@@ -51,7 +51,8 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
                   <div className="text-center flex-1">Cart</div>
                 </div>
                 <div className="mt-8 flex flex-col h-screen justify-between flex-1">
-                  {cartItems.length > 0 ?
+                  {/* TODO: Figure out why cartItems undefined causing an error */}
+                  {cartItems && cartItems.length > 0 ?
                     <>
                       <div className="space-y-3 px-5 flex-1 overflow-y-scroll">
                         {cartItems.map((d, i) =>
