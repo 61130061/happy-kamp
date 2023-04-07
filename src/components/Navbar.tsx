@@ -43,7 +43,7 @@ export default function Navbar ({ onOpenCart, cartNumber }: PropsType) {
         {/* Big screen menu */}
         <div className="hidden max-w-4xl mx-auto md:flex items-center justify-between mb-4">
           {/* Left menu */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mr-10">
             <Link href="/">
               <button className={`hover:text-primary-3 px-8 py-3${router.pathname === "/" ? " text-primary-3" : ""}`}>Home</button>
             </Link>
@@ -59,12 +59,17 @@ export default function Navbar ({ onOpenCart, cartNumber }: PropsType) {
           </div>
 
           {/* Right menu */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <button onClick={() => isLogin ? removeCookie('token') : setShowAuth(true)} className="flex items-center gap-3 p-3">
-              <Image src="/icon/user-svgrepo-com.svg" width={22} height={22} alt="user" />
+              <Image src="/icon/user-svgrepo-com.svg" width={20} height={20} alt="user" />
               <div>{isLogin ? localStorage.getItem("store-user-name") : "Login"}</div>
             </button>
-            <button onClick={() => onOpenCart()} className="flex gap-3 p-3">Cart <span>[{cartNumber}]</span></button>
+            <button onClick={() => onOpenCart()} className="flex items-center gap-3 p-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-black">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+              </svg>
+              <span>[{cartNumber}]</span>
+            </button>
           </div>
         </div>
 
@@ -72,7 +77,7 @@ export default function Navbar ({ onOpenCart, cartNumber }: PropsType) {
         <div className="flex md:hidden items-center mt-1">
           {/* Fix badge number with more bueatiful UI */}
           <button onClick={() => onOpenCart()} className="flex gap-3 p-3 text-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-black">
               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
             </svg>
             <span>[{cartNumber}]</span>

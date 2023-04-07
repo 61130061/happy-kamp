@@ -32,10 +32,10 @@ export default function Announcement({ announcements }: PropsType) {
           0% {
             opacity: 0;
           }
-          10% {
+          3% {
             opacity: 1;
           }
-          90% {
+          95% {
             opacity: 1;
           }
           100% {

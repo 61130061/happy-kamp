@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Link from 'next/link';
 
 import Layout from '../components/Layout';
 import Carousel from '../components/Carousel';
@@ -18,6 +19,7 @@ export interface AppPropsType {
 export interface ProductType {
   id: string,
   name: string,
+  ribbon: string,
   price: number,
   formattedPrice: string,
   discountedPrice: number,
@@ -102,14 +104,16 @@ export default function Home ({
 
         {/* New Arrivavls */}
         <div className="py-5">
-          <div className="text-3xl mt-10 mb-5 text-center">New Arrivals</div>
+          <div className="text-3xl mt-10 mb-6 text-center">New Arrivals</div>
           <div className="flex hide-scrollbar overflow-x-scroll snap-mandatory snap-x px-8 pb-4">
             {newProducts.map((d, i) =>
               <ProductCard onAddToCart={() => setQuickViewProduct(d)} key={i} onOpenQuickView={() => setQuickViewProduct(d)} product={d} />
             )}
           </div>
           <div className="flex justify-center mt-14">
-            <button>Shop All</button>
+            <Link href="/shop-collection">
+              <button className="py-2 px-8 bg-black text-white">Shop All</button>
+            </Link>
           </div>
         </div>
       </>

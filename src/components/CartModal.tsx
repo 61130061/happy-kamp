@@ -51,16 +51,16 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
                   <button onClick={handleClose}>{'>'}</button>
                   <div className="text-center flex-1">Cart</div>
                 </div>
-                <div className="mt-8 flex flex-col h-screen justify-between flex-1">
+                <div className="flex flex-col h-screen justify-between flex-1">
                   {/* TODO: Figure out why cartItems undefined causing an error */}
                   {cartItems.cart_list && cartItems.cart_list.length > 0 ?
                     <>
-                      <div className="space-y-3 px-5 flex-1 overflow-y-scroll">
+                      <div className="space-y-3 px-5 pt-8 flex-1 overflow-y-scroll">
                         {cartItems.cart_list.map((d, i) =>
                           <Item onQty={onUpdateQty} onDel={onDelCartItem} data={d} key={i} />
                         )}
                       </div>
-                      <div className="p-8 text-3xl">
+                      <div className="px-8 py-5 text-3xl">
                         <div>Subtotal</div>
                         <div>$ {cartItems.sub_total.toFixed(2)}</div>
                         <Link href="/shopping-cart"><button className="w-full text-sm p-3 bg-primary-1 text-white mt-10">View Cart</button></Link>

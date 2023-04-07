@@ -50,19 +50,19 @@ export default function Carousel({ images }: PropsType) {
         {images.map((_, index) => (
           <button
             key={index}
-            className={`carousel-dot w-3 h-3 rounded-full mx-2 focus:outline-none ${currentIndex === index ? 'bg-blue-500' : 'bg-gray-300'
+            className={`carousel-dot w-3 h-3 rounded-full mx-2 focus:outline-none ${currentIndex === index ? 'bg-gray-700' : 'bg-gray-300'
               }`}
             onClick={() => goToIndex(index)}
           ></button>
         ))}
       </div>
-      <button className="carousel-arrow-left absolute top-1/2 left-4 transform -translate-y-1/2 focus:outline-none" onClick={goToPrevious}>
-        <svg viewBox="0 0 24 24" className="w-8 h-8 fill-current text-gray-700">
+      <button className="carousel-arrow-left absolute top-1/2 left-4 md:left-10 transform -translate-y-1/2 focus:outline-none" onClick={goToPrevious}>
+        <svg viewBox="0 0 24 24" className="w-10 h-10 fill-current text-gray-700">
           <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L9.83 12l5.58-5.59z"></path>
         </svg>
       </button>
-      <button className="carousel-arrow-right absolute top-1/2 right-4 transform -translate-y-1/2 focus:outline-none" onClick={goToNext}>
-        <svg viewBox="0 0 24 24" className="w-8 h-8 fill-current text-gray-700">
+      <button className="carousel-arrow-right absolute top-1/2 right-4 md:right-10 transform -translate-y-1/2 focus:outline-none" onClick={goToNext}>
+        <svg viewBox="0 0 24 24" className="w-10 h-10 fill-current text-gray-700">
           <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L14.17 12l-5.58 5.59z"></path>
         </svg>
       </button>
