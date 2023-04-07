@@ -102,14 +102,14 @@ export default function ProductPage({
         <QuickViewModal onAddToCart={onAddToCart} sku={quickViewProduct.sku} onClose={() => setQuickViewProduct(null)} />
       }
       <div className="max-w-4xl mx-auto pt-14">
-        <div className="flex">
+        <div className="md:flex px-5 md:px-0">
           {/* Left Side */}
           <div className="flex-1">
             <ImageGallery images={product.media.map(item => item.fullUrl)} />
             <div className="text-sm mt-8">{product.description}</div>
           </div>
           {/* Right Side */}
-          <form onSubmit={onSubmit} className="w-[45%] p-[20px] text-sm">
+          <form onSubmit={onSubmit} className="w-full md:w-[45%] mt-5 md:mt-0 md:p-[20px] text-sm">
             <div className="text-2xl mb-2">{product.name}</div>
             <div>sku: {product.sku}</div>
             <div className="text-2xl my-3">{product.formattedPrice}</div>
