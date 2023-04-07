@@ -113,7 +113,12 @@ export default function ProductPage({
           <form onSubmit={onSubmit} className="w-full md:w-[45%] mt-5 md:mt-0 md:p-[20px] text-sm">
             <div className="text-2xl mb-2">{product.name}</div>
             <div>sku: {product.sku}</div>
-            <div className="text-2xl my-3">{product.formattedPrice}</div>
+            <div className="flex gap-1">
+              {product.price !== product.discountedPrice &&
+                <div className="text-2xl my-3 line-through">{product.formattedPrice}</div>
+              }
+              <div className="text-2xl my-3">{product.formattedDiscountedPrice}</div>
+            </div>
             <div className="my-5">
               <div className="mb-2">color:</div>
               {product.options.filter(item => item.key == "Color")[0].selections.map((d, i) =>
@@ -160,7 +165,12 @@ export default function ProductPage({
                 <div className="p-2">
                   <Link href={"/product-page/" + d.sku}>
                     <div>{d.name}</div>
-                    <div>{d.formattedPrice}</div>
+                    <div className="flex justify-center gap-1">
+                      {d.price !== d.discountedPrice &&
+                        <div className="line-through">{d.formattedPrice}</div>
+                      }
+                      <div>{d.formattedDiscountedPrice}</div>
+                    </div>
                   </Link>
                   <button onClick={() => setQuickViewProduct(d)} className="bg-black text-white w-full py-2 mt-2">Add to Cart</button>
                 </div>

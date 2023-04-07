@@ -22,6 +22,7 @@ export interface ProductType {
   ribbon: string,
   price: number,
   formattedPrice: string,
+  formattedDiscountedPrice: string,
   discountedPrice: number,
   urlPart: string,
   sku: string,
