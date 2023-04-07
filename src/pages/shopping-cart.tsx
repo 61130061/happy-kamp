@@ -31,7 +31,7 @@ export default function ShoppingCart({
             <div>
               <div>
                 {cartItems.map((d, i) =>
-                  <Item onQty={(p: CartPayloadType, o: CartPayloadType) => onUpdateQty(p, o, cookies.token)} onDel={onDelCartItem} data={d} key={i} />
+                  <Item onQty={(p: CartPayloadType, o: CartPayloadType) => onUpdateQty(p, o, cookies.token)} onDel={(d: CartPayloadType) => onDelCartItem(d, cookies.token)} data={d} key={i} />
                 )}
               </div>
               <div>
