@@ -68,7 +68,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
         <div className="fixed inset-0 bg-black opacity-50"></div>
 
         {/* Modal container */}
-        <div className="relative flex bg-white w-full max-w-4xl mx-auto rounded shadow-lg overflow-hidden transition-all">
+        <div className="relative sm:flex bg-white w-full max-w-4xl mx-auto rounded shadow-lg overflow-hidden transition-all">
           {status ?
             <div className="text-xl w-full text-center py-44">{status}</div> :
             product &&
@@ -79,12 +79,12 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
                 </svg>
               </button>
               {/* Feature image */}
-              <div className="flex-1">
-                <img className="min-w-[320px]" src={product.media[0].fullUrl} />
+              <div className="flex-1 flex justify-center">
+                <img className="max-w-md min-w-[320px]" src={product.media[0].fullUrl} />
               </div>
 
               {/* Add to Cart form */}
-              <form onSubmit={onSubmit} className="w-[40%] text-sm flex flex-col gap-4 px-5 py-10">
+              <form onSubmit={onSubmit} className="sm:w-[40%] text-sm flex flex-col sm:gap-4 gap-2 px-5 sm:py-10 pb-5">
                 <div className="text-2xl">{product.name}</div>
                 <div className="text-2xl">{product.price}</div>
                 <div>sku: {product.sku}</div>
