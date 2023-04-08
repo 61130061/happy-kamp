@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { CartPayloadType, AppPropsType, ProductType } from './index';
 
@@ -8,30 +9,27 @@ import Layout from '../components/Layout';
 
 export default function ShoppingCart({ 
   cartItems,
-  isLogin,
   updateCart,
   onUpdateQty,
   onDelCartItem
 }: AppPropsType) {
   const [cookies] = useCookies(['token']);
-  const [list, setList] = useState(isLogin ? null : cartItems.cart_list);
+  const [cart, setCart] = useState(cartItems);
 
   useEffect(() => {
-    if (!isLogin) {
-      setList(cartItems.cart_list);
-    }
-  }, [isLogin, cartItems])
+    setCart(cartItems);
+  }, [cookies, cartItems])
 
   return (
     <Layout onUpdateQty={onUpdateQty} updateCart={updateCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title="Our Story">
       <div className="max-w-4xl py-14 mx-auto md:flex gap-14">
         {/* My Cart List */}
         <div className="flex-1 p-5 md:p-0">
-          <div className="text-lg border-b font-[300] border-black pb-4 mb-8">My cart</div>
-          {list && list.length > 0 ?
+          <div className="text-lg border-b font-[300] pb-4 mb-8">My cart</div>
+          {cart.cart_list.length > 0 ?
             <div>
               <div>
-                {cartItems.cart_list.map((d, i) =>
+                {cart.cart_list.map((d, i) =>
                   <Item onQty={(p: CartPayloadType, o: CartPayloadType) => onUpdateQty(p, o, cookies.token)} onDel={(d: CartPayloadType) => onDelCartItem(d, cookies.token)} data={d} key={i} />
                 )}
               </div>
@@ -40,20 +38,20 @@ export default function ShoppingCart({
                 <div>Add a note</div>
               </div>
             </div> :
-            <div className="pt-16 pb-28 text-center border-b border-black">
+            <div className="pt-16 pb-28 text-center border-b">
               <div>Cart is empty</div>
               <div className="underline">Continue Browsing</div>
             </div>
           }
         </div>
         {/* Order Summary */}
-        {list && list.length > 0 &&
+        {cart.cart_list.length > 0 &&
           <div className="p-5 md:p-0 md:w-[30%]">
-            <div className="text-lg border-b font-[300] border-black pb-4 mb-8">Order summary</div>
-            <div className="space-y-2 border-b border-black pb-4 mb-4 text-sm">
+            <div className="text-lg border-b font-[300] pb-4 mb-8">Order summary</div>
+            <div className="space-y-2 border-b pb-4 mb-4 text-sm">
               <div className="flex justify-between">
                 <div>Subtotal</div>
-                <div>{cartItems.sub_total.toFixed(2)}</div>
+                <div>{cart.sub_total.toFixed(2)}</div>
               </div>
               <div>
                 <div className="flex justify-between">
@@ -65,10 +63,12 @@ export default function ShoppingCart({
             </div>
             <div className="flex justify-between mb-8">
               <div>Total</div>
-              <div>{cartItems.total.toFixed(2)}</div>
+              <div>{cart.total.toFixed(2)}</div>
             </div>
             <div className="flex flex-col gap-5">
-              <button className="bg-black text-white text-sm py-3">Checkout</button>
+              <Link href="/checkout">
+                <button className="bg-black w-full text-white text-sm py-3">Checkout</button>
+              </Link>
               <button>Secure Checkout</button>
             </div>
           </div>

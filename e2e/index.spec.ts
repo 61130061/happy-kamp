@@ -51,17 +51,24 @@ test('Home: Quick View and Quick Add To Cart modal are working properly', async 
 
   const products = await page.$$('div[aria-label="product-cart"]');
   for (let i=0; i<products.length; i++) {
+    const name = await products[i].$('div[id="product-name"]');
+    if (!name) throw Error("Product name not found.");
+
+    // test quick view button 
     await products[i].hover();
     await expect(page.getByTestId('quick-view-button-'+i)).toBeVisible();
     await page.getByTestId('quick-view-button-'+i).click();
-
     await expect(page.getByLabel('quick-view-modal')).toBeVisible();
+    await page.getByTestId('quick-view-product-name').waitFor(); // wait while fetching
+    expect(page.getByTestId('quick-view-product-name').innerText()).toStrictEqual(name.innerText());
     await page.locator('button[name="close-quick-view-modal"]').click();
     await expect(page.getByLabel('quick-view-modal')).toBeHidden();
 
+    // test add to cart button
     await page.getByTestId('add-to-cart-button-'+i).click();
-
     await expect(page.getByLabel('quick-view-modal')).toBeVisible();
+    await page.getByTestId('quick-view-product-name').waitFor(); // wait while fetching
+    expect(page.getByTestId('quick-view-product-name').innerText()).toStrictEqual(name.innerText());
     await page.locator('button[name="close-quick-view-modal"]').click();
     await expect(page.getByLabel('quick-view-modal')).toBeHidden();
   }

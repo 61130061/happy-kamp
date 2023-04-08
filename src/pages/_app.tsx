@@ -10,19 +10,6 @@ const initCartItems = { cart_list: [], shipping: 0, sub_total: 0, total: 0 }
 export default function App({ Component, pageProps }: AppProps) {
   const [cartItems, setCartItems] = useState<CartType>(initCartItems);
 
-  useEffect(() => {
-    const initStorageKey = Object.keys(initCartItems);
-    const storage = localStorage.getItem("cart-items");
-
-    if (!storage) {
-      localStorage.setItem("cart-items", JSON.stringify(initCartItems));
-    } else {
-      if (initStorageKey.length !== Object.keys(JSON.parse(storage)).length) {
-        localStorage.setItem("cart-items", JSON.stringify(initCartItems));
-      }
-    }
-  }, [])
-
   const updateCart = useCallback(async (cookie: string | null) => {
     if (!cookie) {
       const cart = localStorage.getItem("cart-items");
@@ -54,7 +41,11 @@ export default function App({ Component, pageProps }: AppProps) {
       const resData = await res.json();
 
       // Update fetch data from api to cartItems
-      setCartItems(resData.detail);
+      if (resData.detail.length === 0) {
+        setCartItems(initCartItems);
+      } else {
+        setCartItems(resData.detail);
+      }
     }
   }, [])
 

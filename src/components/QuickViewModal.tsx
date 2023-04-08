@@ -86,7 +86,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
 
               {/* Add to Cart form */}
               <form onSubmit={onSubmit} className="sm:w-[40%] text-sm flex flex-col sm:gap-4 gap-2 px-5 sm:py-10 pb-5">
-                <div className="text-2xl">{product.name}</div>
+                <div data-testid="quick-view-product-name" className="text-2xl">{product.name}</div>
                 <div className="text-2xl">{product.price}</div>
                 <div>sku: {product.sku}</div>
                 <div>

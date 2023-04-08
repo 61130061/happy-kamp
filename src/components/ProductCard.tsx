@@ -26,7 +26,7 @@ export default function ProductCard({ product, onOpenQuickView, onAddToCart, ind
       </div>
       <div className="relative text-center text-sm flex flex-col gap-2 bg-white z-50">
         <Link href={"/product-page/" + product.sku}>
-          <div>{product.name}</div>
+          <div id="product-name">{product.name}</div>
           <div className="border-b border-black w-5 mx-auto py-1" />
           {/* TODO: Handle discount */}
           <div className="flex justify-center py-3 gap-2">
