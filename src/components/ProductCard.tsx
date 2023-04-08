@@ -5,13 +5,14 @@ import Image from 'next/image';
 interface PropsType {
   product: ProductType,
   onOpenQuickView: Function,
+  index: number,
   onAddToCart: Function
 }
 
-export default function ProductCard({ product, onOpenQuickView, onAddToCart }: PropsType) {
+export default function ProductCard({ product, onOpenQuickView, onAddToCart, index }: PropsType) {
 
   return (
-    <div className="group left-[10px] snap-start px-5 min-w-[320px]">
+    <div aria-label="product-cart" className="group left-[10px] snap-start px-5 min-w-[320px]">
       <div className="relative mb-3">
         <Link className="flex justify-center" href={"/product-page/" + product.sku}>
           <Image alt={product.media[0].title} height={320} src={product.media[0].url} width={320} />
@@ -19,7 +20,7 @@ export default function ProductCard({ product, onOpenQuickView, onAddToCart }: P
             <div className="absolute left-0 top-0 bg-red-600 px-3 text-white text-sm">{product.ribbon}</div>
           }
         </Link>
-        <button onClick={() => onOpenQuickView()} className="w-full bg-white bg-opacity-50 py-3 absolute bottom-0 transition-all duration-300 transform translate-y-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 z-10">
+        <button data-testid={"quick-view-button-" + index} name="quick-view-button" onClick={() => onOpenQuickView()} className="w-full bg-white bg-opacity-50 py-3 absolute bottom-0 transition-all duration-300 transform translate-y-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 z-10">
           Quick View
         </button>
       </div>
@@ -35,7 +36,7 @@ export default function ProductCard({ product, onOpenQuickView, onAddToCart }: P
             }
           </div>
         </Link>
-        <button onClick={() => onAddToCart()} className="border py-2 border-black">Add to Cart</button>
+        <button data-testid={"add-to-cart-button-"+index} name="add-to-cart" onClick={() => onAddToCart()} className="border py-2 border-black">Add to Cart</button>
       </div>
     </div>
   )

@@ -34,8 +34,8 @@ export default function Carousel({ images }: PropsType) {
   }
 
   return (
-    <div className="relative w-full h-[620px]">
-      <div className="carousel">
+    <div aria-label="carousel" className="relative w-full h-[620px]">
+      <div>
         {images.map((image, index) => (
           <div
             key={index}

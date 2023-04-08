@@ -41,6 +41,7 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
         <div onClick={handleClose} className={`absolute inset-0 ${!isOpen && 'opacity-0'}`}></div>
         <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
           <div
+            aria-label="cart-modal"
             className={`relative w-screen max-w-sm ${
               isOpen ? 'transform translate-x-0 ease-out duration-300' : 'transform translate-x-full ease-in duration-200'
             }`}
@@ -48,7 +49,7 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
             <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
               <div className="flex flex-col flex-1 overflow-y-hidden">
                 <div className="flex text-xl py-8 px-10 items-center bg-primary-1 text-white">
-                  <button onClick={handleClose}>{'>'}</button>
+                  <button name="close-cart-modal" onClick={handleClose}>{'>'}</button>
                   <div className="text-center flex-1">Cart</div>
                 </div>
                 <div className="flex flex-col h-screen justify-between flex-1">

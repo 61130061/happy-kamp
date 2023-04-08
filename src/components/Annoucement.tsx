@@ -18,7 +18,7 @@ export default function Announcement({ announcements }: PropsType) {
   const announcement = announcements[index]; 
 
   return (
-    <div className="text-center tracking-widest text-white bg-primary-1 py-3">
+    <div aria-label="annoucement-bar" className="text-center tracking-widest text-white bg-primary-1 py-3">
       <div className="flex justify-center items-center">
         <span key={index} className="fade-in-out">{announcement}</span>
       </div>

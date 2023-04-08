@@ -21,8 +21,8 @@ export default function AuthModal ({ isOpen, onClose }: PropsType) {
   }, [cookies, onClose])
 
   return (
-    <div className={`flex items-center justify-center z-[999] top-0 right-0 left-0 bottom-0 fixed h-screen w-screen overflow-hidden bg-white${isOpen ? "" : " hidden"}`}>
-      <button onClick={() => onClose()} className="absolute top-16 right-16">X</button>
+    <div aria-label="auth-modal" className={`flex items-center justify-center z-[999] top-0 right-0 left-0 bottom-0 fixed h-screen w-screen overflow-hidden bg-white${isOpen ? "" : " hidden"}`}>
+      <button name="close-auth-modal" onClick={() => onClose()} className="absolute top-16 right-16">X</button>
       {isSignup ?
         <Signup swap={() => setIsSignup(false)} /> :
         <Login swap={() => setIsSignup(true)} />

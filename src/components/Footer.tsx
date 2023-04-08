@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <>
+    <div aria-label="footer">
       <div className="border-t border-primary-1 mt-3 mb-[37px]" />{/* Divider */}
       <div className="max-w-4xl mx-auto px-5">
         <div className="text-center text-[30px] leading-[1.6em] font-[200] tracking-widest mb-10">happy kids</div>
@@ -54,6 +54,6 @@ export default function Footer() {
           © 2035 by happy kids. Powered and secured by Wix
         </div>
       </div>
-    </>
+    </div>
   )
 } 

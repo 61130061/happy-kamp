@@ -63,7 +63,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
   }
 
   return (
-    <div className="fixed z-[9999] inset-0 overflow-y-auto">
+    <div aria-label="quick-view-modal" className="fixed z-[9999] inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen">
         {/* Modal backdrop */}
         <div className="fixed inset-0 bg-black opacity-50"></div>
@@ -74,7 +74,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
             <div className="text-xl w-full text-center py-44">{status}</div> :
             product &&
             <>
-              <button onClick={() => onClose()} className="absolute top-5 right-5">
+              <button name="close-quick-view-modal" onClick={() => onClose()} className="absolute top-5 right-5">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 m-auto">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>

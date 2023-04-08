@@ -7,6 +7,7 @@ Frontend - happy kids!
   - Eslint with [Next.js default rule](https://nextjs.org/docs/basic-features/eslint)
   - Typescript 
 - Tailwind: UI library
+- Playwright: e2e testing
 - [React-slider](https://zillow.github.io/react-slider/#reactsliderhttps://zillow.github.io/react-slider): price filter range slider component.
 - [React-cookie](https://github.com/reactivestack/cookies.git): working with authorization api
 
@@ -17,3 +18,15 @@ Frontend - happy kids!
 - [ ] Show saving price
 - [ ] Out of stock
 - [ ] Multiple currencies
+
+
+## Dev
+
+### Test Structure
+> Every tests are including both desktop and mobile viewport size
+- Home page
+  - Visibility test
+  - Cart modal test
+  - Auth modal test
+  - Quick view and Add to cart modal test
+  - Shop all button test

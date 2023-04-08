@@ -104,16 +104,16 @@ export default function Home ({
         <Carousel images={landImgs} />
 
         {/* New Arrivavls */}
-        <div className="py-5">
+        <div aria-label="new-arrival-section" className="py-5">
           <div className="text-3xl mt-10 mb-6 text-center">New Arrivals</div>
           <div className="flex hide-scrollbar overflow-x-scroll snap-mandatory snap-x px-8 pb-4">
             {newProducts.map((d, i) =>
-              <ProductCard onAddToCart={() => setQuickViewProduct(d)} key={i} onOpenQuickView={() => setQuickViewProduct(d)} product={d} />
+              <ProductCard index={i} onAddToCart={() => setQuickViewProduct(d)} key={i} onOpenQuickView={() => setQuickViewProduct(d)} product={d} />
             )}
           </div>
           <div className="flex justify-center mt-14">
             <Link href="/shop-collection">
-              <button className="py-2 px-8 bg-black text-white">Shop All</button>
+              <button name="shop-all" className="py-2 px-8 bg-black text-white">Shop All</button>
             </Link>
           </div>
         </div>
