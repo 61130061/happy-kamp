@@ -24,7 +24,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
   }, [sku])
 
   useEffect(() => {
-    if (product) {
+    if (product && selectedColor) {
       const index = product.options[0].selections.filter(item => item.key === selectedColor)[0].linkedMediaItems[0].index;
       setImageIndex(index);
     }
@@ -89,7 +89,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
               </button>
               {/* Feature image */}
               <div className="flex-1 flex justify-center">
-                <Image width={640} height={320} alt={product.media[0].title} className="max-w-md min-w-[320px]" src={product.media[imageIndex].fullUrl} />
+                <Image width={640} height={320} alt={product.media[imageIndex].title} className="max-w-md min-w-[320px]" src={product.media[imageIndex].fullUrl} />
               </div>
 
               {/* Add to Cart form */}
