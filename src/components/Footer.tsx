@@ -4,9 +4,12 @@ import Image from 'next/image';
 export default function Footer() {
   return (
     <div aria-label="footer">
-      <div className="border-t border-primary-1 mt-3 mb-[37px]" />{/* Divider */}
+      <div className="border-t border-primary-1 mt-3 mb-[37px]" />
+      {/* Divider */}
       <div className="max-w-4xl mx-auto px-5">
-        <div className="text-center text-[30px] leading-[1.6em] font-[200] tracking-widest mb-10">happy kids</div>
+        <div className="text-center text-[30px] leading-[1.6em] font-[200] tracking-widest mb-10">
+          happy kids
+        </div>
 
         <div className="flex flex-col items-center sm:flex-row text-sm gap-10 sm:gap-5 sm:items-start justify-between mb-[42px]">
           {/* 1st Manu */}
@@ -27,9 +30,24 @@ export default function Footer() {
 
           {/* Social Media */}
           <div className="flex gap-10 order-1 sm:order-none">
-            <Image alt="facebook" src="/icon/social/facebook-svgrepo-com.svg" width={20} height={20} />
-            <Image alt="pinterest" src="/icon/social/pinterest-svgrepo-com.svg" width={20} height={20} />
-            <Image alt="instagram" src="/icon/social/instagram-svgrepo-com.svg" width={20} height={20} />
+            <Image
+              alt="facebook"
+              src="/icon/social/facebook-svgrepo-com.svg"
+              width={20}
+              height={20}
+            />
+            <Image
+              alt="pinterest"
+              src="/icon/social/pinterest-svgrepo-com.svg"
+              width={20}
+              height={20}
+            />
+            <Image
+              alt="instagram"
+              src="/icon/social/instagram-svgrepo-com.svg"
+              width={20}
+              height={20}
+            />
           </div>
 
           {/* 2nd Menu */}
@@ -45,8 +63,14 @@ export default function Footer() {
         <div className="flex flex-col items-center mb-14">
           <div className="text-[24px] my-5">Join Our Mailing List</div>
           <div className="flex flex-col sm:flex-row w-full justify-center gap-2">
-            <input className="border px-3 py-2 border-primary-1" type="email" placeholder="Enter your email here*" />
-            <button className="bg-primary-1 hover:bg-primary-3 px-4 py-2 text-white">Subscribe Now</button>
+            <input
+              className="border px-3 py-2 border-primary-1"
+              type="email"
+              placeholder="Enter your email here*"
+            />
+            <button className="bg-primary-1 hover:bg-primary-3 px-4 py-2 text-white">
+              Subscribe Now
+            </button>
           </div>
         </div>
 
@@ -55,5 +79,5 @@ export default function Footer() {
         </div>
       </div>
     </div>
-  )
-} 
+  );
+}

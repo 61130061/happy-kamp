@@ -4,6 +4,6 @@ const nextConfig = {
   images: {
     domains: ['skillkamp-api.com'],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

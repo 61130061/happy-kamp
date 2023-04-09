@@ -13,7 +13,7 @@ export const openCloseCart = async (page: Page, isMobile?: boolean) => {
   await expect(page.getByLabel('cart-modal')).toBeInViewport();
   await page.locator('button[name="close-cart-modal"]').click();
   await expect(page.getByLabel('cart-modal')).not.toBeInViewport();
-}
+};
 
 export const openCloseAuth = async (page: Page, isMobile?: boolean) => {
   await expect(page.getByLabel('autho-modal')).not.toBeInViewport();
@@ -28,4 +28,4 @@ export const openCloseAuth = async (page: Page, isMobile?: boolean) => {
   await expect(page.getByLabel('auth-modal')).toBeInViewport();
   await page.locator('button[name="close-auth-modal"]').click();
   await expect(page.getByLabel('autho-modal')).not.toBeInViewport();
-}
+};

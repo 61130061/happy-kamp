@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 import { openCloseCart, openCloseAuth } from './utils/navbar';
 
-const mobile_size = { width: 390, height: 650 }
+const mobile_size = { width: 390, height: 650 };
 const url = 'http://localhost:3000/';
 
 test('Home: Elements are visible', async ({ page }) => {
@@ -20,7 +20,7 @@ test('Home: Elements are visible', async ({ page }) => {
   await expect(page.getByLabel('carousel')).toBeVisible();
   await expect(page.getByLabel('new-arrival-section')).toBeVisible();
   await expect(page.getByLabel('footer')).toBeVisible();
-})
+});
 
 test('Home: Cart modal is working properly', async ({ page }) => {
   await page.goto(url);
@@ -29,55 +29,59 @@ test('Home: Cart modal is working properly', async ({ page }) => {
   // Mobile test
   await page.setViewportSize(mobile_size);
   await openCloseCart(page, true);
-})
-
+});
 
 test('Home: Auth modal is working properly', async ({ page }) => {
   await page.goto(url);
 
   await openCloseAuth(page);
-    // Mobile test
+  // Mobile test
   await page.setViewportSize(mobile_size);
   await openCloseAuth(page, true);
-})
+});
 
-test('Home: Quick View and Quick Add To Cart modal are working properly', async ({ page }) => {
+test('Home: Quick View and Quick Add To Cart modal are working properly', async ({
+  page,
+}) => {
   await page.goto(url);
 
-  const product_number: number = await page.getByLabel("product-cart").count();
+  const product_number: number = await page.getByLabel('product-cart').count();
   if (product_number < 0) {
-    throw Error ("Expect at least 1 product to show in Home page.")
+    throw Error('Expect at least 1 product to show in Home page.');
   }
 
   const products = await page.$$('div[aria-label="product-cart"]');
-  for (let i=0; i<products.length; i++) {
+  for (let i = 0; i < products.length; i++) {
     const name = await products[i].$('div[id="product-name"]');
-    if (!name) throw Error("Product name not found.");
+    if (!name) throw Error('Product name not found.');
 
-    // test quick view button 
+    // test quick view button
     await products[i].hover();
-    await expect(page.getByTestId('quick-view-button-'+i)).toBeVisible();
-    await page.getByTestId('quick-view-button-'+i).click();
+    await expect(page.getByTestId('quick-view-button-' + i)).toBeVisible();
+    await page.getByTestId('quick-view-button-' + i).click();
     await expect(page.getByLabel('quick-view-modal')).toBeVisible();
     await page.getByTestId('quick-view-product-name').waitFor(); // wait while fetching
-    expect(page.getByTestId('quick-view-product-name').innerText()).toStrictEqual(name.innerText());
+    expect(
+      page.getByTestId('quick-view-product-name').innerText(),
+    ).toStrictEqual(name.innerText());
     await page.locator('button[name="close-quick-view-modal"]').click();
     await expect(page.getByLabel('quick-view-modal')).toBeHidden();
 
     // test add to cart button
-    await page.getByTestId('add-to-cart-button-'+i).click();
+    await page.getByTestId('add-to-cart-button-' + i).click();
     await expect(page.getByLabel('quick-view-modal')).toBeVisible();
     await page.getByTestId('quick-view-product-name').waitFor(); // wait while fetching
-    expect(page.getByTestId('quick-view-product-name').innerText()).toStrictEqual(name.innerText());
+    expect(
+      page.getByTestId('quick-view-product-name').innerText(),
+    ).toStrictEqual(name.innerText());
     await page.locator('button[name="close-quick-view-modal"]').click();
     await expect(page.getByLabel('quick-view-modal')).toBeHidden();
   }
-
-})
+});
 
 test('Home: Shop all button is working properly', async ({ page }) => {
   await page.goto(url);
 
   await page.locator('button[name="shop-all"]').click();
-  await expect(page).toHaveURL('http://localhost:3000/shop-collection')
-})
+  await expect(page).toHaveURL('http://localhost:3000/shop-collection');
+});

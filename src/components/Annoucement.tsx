@@ -15,12 +15,17 @@ export default function Announcement({ announcements }: PropsType) {
     return () => clearInterval(intervalId);
   }, [index, announcements]);
 
-  const announcement = announcements[index]; 
+  const announcement = announcements[index];
 
   return (
-    <div aria-label="annoucement-bar" className="text-center tracking-widest text-white bg-primary-1 py-3">
+    <div
+      aria-label="annoucement-bar"
+      className="text-center tracking-widest text-white bg-primary-1 py-3"
+    >
       <div className="flex justify-center items-center">
-        <span key={index} className="fade-in-out">{announcement}</span>
+        <span key={index} className="fade-in-out">
+          {announcement}
+        </span>
       </div>
       <style jsx>{`
         .fade-in-out {

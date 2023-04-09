@@ -2,15 +2,20 @@ import Layout from '../components/Layout';
 
 import { AppPropsType } from './index';
 
-export default function Contact ({ 
-  cartItems, 
-  onDelCartItem, 
+export default function Contact({
+  cartItems,
+  onDelCartItem,
   updateCart,
-  onUpdateQty
+  onUpdateQty,
 }: AppPropsType) {
-
   return (
-    <Layout onUpdateQty={onUpdateQty} updateCart={updateCart} onDelCartItem={onDelCartItem} cartItems={cartItems} title="Contact">
+    <Layout
+      onUpdateQty={onUpdateQty}
+      updateCart={updateCart}
+      onDelCartItem={onDelCartItem}
+      cartItems={cartItems}
+      title="Contact"
+    >
       <div className="max-w-3xl mx-auto">
         <div>
           <div className="text-3xl text-center my-10">Contact Us</div>
@@ -45,7 +50,9 @@ export default function Contact ({
         </div>
 
         <div className="py-20 px-5 md:px-0">
-          <div className="text-center mb-10">FOR ANY QUESTIONS, PLEASE SEND US A MESSAGE</div>
+          <div className="text-center mb-10">
+            FOR ANY QUESTIONS, PLEASE SEND US A MESSAGE
+          </div>
           <form>
             <div className="flex flex-col sm:flex-row gap-5 mb-2">
               <div className="flex flex-1 flex-col gap-2">
@@ -67,7 +74,10 @@ export default function Contact ({
             </div>
             <div className="flex flex-col gap-2 mb-2">
               <label>Message</label>
-              <textarea rows={4} className="border-b focus:outline-none focus:border-primary-1 hover:border-primary-1" />
+              <textarea
+                rows={4}
+                className="border-b focus:outline-none focus:border-primary-1 hover:border-primary-1"
+              />
             </div>
             <div className="flex justify-center mt-3">
               <button className="px-8 py-2">Submit</button>
@@ -78,5 +88,5 @@ export default function Contact ({
         {/* TODO: Add map using GEOAPIFY */}
       </div>
     </Layout>
-  )
+  );
 }
