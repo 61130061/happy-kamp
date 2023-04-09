@@ -16,7 +16,7 @@ Frontend - happy kids!
 ## Added Feature
 
 - [x] fix product image not found
-- [ ] filter show number of product showing rn/all product
+- [x] filter show number of product showing rn/all product
 - [ ] Show saving price
 - [ ] Out of stock
 - [ ] Multiple currencies
