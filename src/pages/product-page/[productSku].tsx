@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -50,6 +50,7 @@ export default function ProductPage({
   const [imageIndex, setImageIndex] = useState(0);
   const [quantity, setQuantity] = useState<number>(1);
   const [autoCart, setAutoCart] = useState<boolean>(false);
+  const relatedProductEle = useRef<HTMLDivElement>(null);
   const [cookies] = useCookies(['token']);
 
   useEffect(() => {
@@ -85,6 +86,15 @@ export default function ProductPage({
       // TODO: Fix auto open cart working once
       setAutoCart(true);
     });
+  };
+
+  const forceScroll = (right?: boolean) => {
+    if (relatedProductEle.current) {
+      relatedProductEle.current.scrollBy({
+        left: right ? -40 : 40,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (
@@ -225,7 +235,10 @@ export default function ProductPage({
         {/* Related Product */}
         <div className="mt-16">
           <div className="mb-8 text-center text-lg">RELATED PRODUCTS</div>
-          <div className="flex hide-scrollbar overflow-x-scroll snap-mandatory snap-x px-8 pb-4 gap-4 text-sm">
+          <div
+            ref={relatedProductEle}
+            className="flex hide-scrollbar overflow-x-scroll snap-mandatory snap-x px-8 pb-4 gap-4 text-sm"
+          >
             {relatedProducts
               .filter((item) => item.sku != product.sku)
               .map((d, i) => (
@@ -261,6 +274,48 @@ export default function ProductPage({
                   </div>
                 </div>
               ))}
+          </div>
+          <div className="flex justify-center gap-2">
+            <button
+              aria-label="scroll-related-product-backward"
+              onClick={() => forceScroll(true)}
+              className="p-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+            </button>
+            <button
+              aria-label="scroll-related-product-forward"
+              onClick={() => forceScroll()}
+              className="p-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

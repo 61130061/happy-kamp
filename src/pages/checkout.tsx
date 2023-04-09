@@ -33,7 +33,7 @@ export default function Checkout({ cartItems }: PropsType) {
           <Link href="/">
             <div
               aria-label="top-logo"
-              className="text-center text-3xl font-[200] tracking-[0.2em] my-5 md:my-16"
+              className="text-center text-3xl font-[200] tracking-[0.2em] my-5 md:my-14"
             >
               happy kids
             </div>
@@ -66,53 +66,53 @@ export default function Checkout({ cartItems }: PropsType) {
                   Back
                 </Link>
                 <form className="space-y-6 mt-5">
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-3 text-sm">
                     <div className="text-base font-[200]">Adress</div>
-                    <div className="md:flex space-y-2 md:space-y-0 gap-3">
-                      <label className="flex flex-1 gap-1 flex-col">
+                    <div className="md:flex space-y-0 md:space-y-0 gap-3">
+                      <label className="flex flex-1 gap-2 flex-col">
                         First Name
                         <input
-                          className="border rounded p-1"
+                          className="border rounded px-2 py-1"
                           placeholder="Tom"
                         />
                       </label>
-                      <label className="flex flex-1 gap-1 flex-col">
+                      <label className="flex flex-1 gap-2 flex-col">
                         Last Name
                         <input
-                          className="border rounded p-1"
+                          className="border rounded px-2 py-1"
                           placeholder="James"
                         />
                       </label>
                     </div>
-                    <label className="flex flex-1 gap-1 flex-col">
+                    <label className="flex flex-1 gap-2 flex-col">
                       Address
                       <input
-                        className="border rounded p-1"
+                        className="border rounded px-2 py-1"
                         placeholder="23/33 NYC"
                       />
                     </label>
                   </div>
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-3 text-sm">
                     <div className="text-base font-[200]">Payment</div>
-                    <label className="flex flex-1 gap-1 flex-col">
+                    <label className="flex flex-1 gap-2 flex-col">
                       Card number
                       <input
-                        className="border rounded p-1"
+                        className="border rounded px-2 py-1"
                         placeholder="xxx-xxx-xxx-xxx-xxxx"
                       />
                     </label>
                     <div className="md:flex space-y-2 md:space-y-0 gap-3">
-                      <label className="flex flex-1 gap-1 flex-col">
+                      <label className="flex flex-1 gap-2 flex-col">
                         Expiry date
                         <input
-                          className="border rounded p-1"
+                          className="border rounded px-2 py-1"
                           placeholder="12/24"
                         />
                       </label>
-                      <label className="flex flex-1 gap-1 flex-col">
+                      <label className="flex flex-1 gap-2 flex-col">
                         Expiry date
                         <input
-                          className="border rounded p-1"
+                          className="border rounded px-2 py-1"
                           placeholder="123"
                         />
                       </label>

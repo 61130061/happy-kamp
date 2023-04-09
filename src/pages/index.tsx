@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
 
@@ -110,6 +110,16 @@ export default function Home({
   const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(
     null,
   );
+  const newArriveEle = useRef<HTMLDivElement>(null);
+
+  const forceScroll = (right?: boolean) => {
+    if (newArriveEle.current) {
+      newArriveEle.current.scrollBy({
+        left: right ? -40 : 40,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   return (
     <Layout
@@ -130,9 +140,52 @@ export default function Home({
         <Carousel images={landImgs} />
 
         {/* New Arrivavls */}
-        <div aria-label="new-arrival-section" className="py-5">
+        <div aria-label="new-arrival-section" className="relative py-5">
           <div className="text-3xl mt-10 mb-6 text-center">New Arrivals</div>
-          <div className="flex hide-scrollbar overflow-x-scroll snap-mandatory snap-x px-8 pb-4">
+          <button
+            aria-label="scroll-product-cart-backward"
+            onClick={() => forceScroll(true)}
+            className="absolute z-[60] p-1 md:p-3 left-3 md:left-5 h-[400px] top-[140px]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="scroll-product-cart-forward"
+            onClick={() => forceScroll(false)}
+            className="absolute z-[60] p-1 md:p-3 h-[400px] right-3 md:right-5 top-[140px]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
+          <div
+            ref={newArriveEle}
+            className="flex hide-scrollbar overflow-x-scroll snap-mandatory snap-x px-8 pb-4"
+          >
             {newProducts.map((d, i) => (
               <ProductCard
                 index={i}
