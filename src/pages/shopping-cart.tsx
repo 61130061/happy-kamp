@@ -174,6 +174,7 @@ interface ItemPropsType {
 }
 
 function Item({ data, onDel, onQty }: ItemPropsType) {
+  const [loadingImg, setLoadingImg] = useState<boolean>(true);
   const [img, setImg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -221,16 +222,27 @@ function Item({ data, onDel, onQty }: ItemPropsType) {
           />
         </svg>
       </button>
-      <Image
-        width={128}
-        height={128}
-        alt={img ? img : '/image-not-found.jpg'}
-        src={img ? img : '/image-not-found.jpg'}
-        className="w-32 border"
-      />
+      <div className="relative w-32 h-32">
+        {loadingImg && (
+          <div className="absolute bg-gray-50 rounded-lg animate-pulse w-full h-full" />
+        )}
+        {img && (
+          <Image
+            width={128}
+            height={128}
+            alt={img}
+            src={img}
+            onLoadingComplete={() => setLoadingImg(false)}
+            onError={() => setImg('/image-not-found.jpg')}
+            className={`w-32`}
+          />
+        )}
+      </div>
       <div className="flex flex-col justify-between flex-1 text-sm">
         <div>
-          <div className="text-lg mb-1">{data.name}</div>
+          <div onClick={() => setLoadingImg(false)} className="text-lg mb-1">
+            {data.name}
+          </div>
           <div>Color: {data.color}</div>
           <div>Size: {data.size}</div>
         </div>

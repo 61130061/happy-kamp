@@ -21,7 +21,15 @@ export default function QuickViewModal({
   const [selectedSize, setSelectedSize] = useState<string | null>('');
   const [imageIndex, setImageIndex] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(1);
+  const [loadingImg, setLoadingImg] = useState<boolean>(true);
+  const [img, setImg] = useState<string | null>(null);
   const [cookies] = useCookies(['token']);
+
+  useEffect(() => {
+    if (product) {
+      setImg(product.media[imageIndex].fullUrl);
+    }
+  }, [imageIndex, product, setImg]);
 
   useEffect(() => {
     fetchData(sku);
@@ -117,13 +125,22 @@ export default function QuickViewModal({
                 </button>
                 {/* Feature image */}
                 <div className="flex-1 flex justify-center">
-                  <Image
-                    width={640}
-                    height={320}
-                    alt={product.media[imageIndex].title}
-                    className="max-w-md min-w-[320px]"
-                    src={product.media[imageIndex].fullUrl}
-                  />
+                  <div className="relative">
+                    {loadingImg && (
+                      <div className="absolute bg-gray-50 rounded-lg animate-pulse w-full h-full" />
+                    )}
+                    {img && (
+                      <Image
+                        width={640}
+                        height={320}
+                        alt={img}
+                        src={img}
+                        onLoadingComplete={() => setLoadingImg(false)}
+                        onError={() => setImg('/image-not-found.jpg')}
+                        className="max-w-md min-w-[320px]"
+                      />
+                    )}
+                  </div>
                 </div>
 
                 {/* Add to Cart form */}

@@ -162,7 +162,7 @@ export default function ShopCollection({
             </Accordion>
             {/* Price Filter */}
             <Accordion title="Price">
-              <div className="pt-5 pb-3">
+              <div className="pt-5 px-2 pb-3">
                 {/* TODO: fix slider not rerender when clear filter */}
                 <ReactSlider
                   value={price}

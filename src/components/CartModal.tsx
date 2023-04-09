@@ -134,6 +134,7 @@ interface ItemsPropsType {
 }
 
 function Item({ data, onDel, onQty }: ItemsPropsType) {
+  const [loadingImg, setLoadingImg] = useState(true);
   const [img, setImg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -181,12 +182,22 @@ function Item({ data, onDel, onQty }: ItemsPropsType) {
           />
         </svg>
       </button>
-      <Image
-        alt={img ? img : '/image-not-found.jpg'}
-        src={img ? img : '/image-not-found.jpg'}
-        width={80}
-        height={80}
-      />
+      <div className="relative w-[80px] h-[80px]">
+        {loadingImg && (
+          <div className="absolute bg-gray-50 rounded-lg animate-pulse w-full h-full" />
+        )}
+        {img && (
+          <Image
+            width={80}
+            height={80}
+            alt={img}
+            src={img}
+            onLoadingComplete={() => setLoadingImg(false)}
+            onError={() => setImg('/image-not-found.jpg')}
+            className={`w-[80px]`}
+          />
+        )}
+      </div>
       <div className="space-y-1 text-sm">
         <div>{data.name}</div>
         <div className="flex gap-1">
