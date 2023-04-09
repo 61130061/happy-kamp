@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ProductType } from '../pages/index'
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,12 +11,23 @@ interface PropsType {
 }
 
 export default function ProductCard({ product, onOpenQuickView, onAddToCart, index }: PropsType) {
+  const [imageIndex, setImageIndex] = useState<number>(0);
 
   return (
     <div aria-label="product-cart" className="group left-[10px] snap-start px-5 min-w-[320px]">
       <div className="relative mb-3">
-        <Link className="flex justify-center" href={"/product-page/" + product.sku}>
-          <Image alt={product.media[0].title} height={320} src={product.media[0].url} width={320} />
+        <Link 
+          onMouseEnter={() => product.media[1] && setImageIndex(1)}
+          onMouseLeave={() => setImageIndex(0)}
+          className="flex justify-center"
+          href={"/product-page/" + product.sku}
+        >
+          <Image 
+            alt={product.media[imageIndex].title}
+            height={320}
+            src={product.media[imageIndex].url}
+            width={320}
+          />
           {product.ribbon !== "" &&
             <div className="absolute left-0 top-0 bg-red-600 px-3 text-white text-sm">{product.ribbon}</div>
           }

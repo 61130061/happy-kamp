@@ -177,7 +177,7 @@ export default function ShopCollection ({
 
           <div className="flex-1 grid sm:grid-cols-2 lg:grid-cols-3 gap-y-5">
             {showProducts.map((d, i) =>
-              <ProductCard onAddToCart={() => setQuickViewProduct(d)} key={i} product={d} onOpenQuickView={() => setQuickViewProduct(d)} />
+              <ProductCard index={i} onAddToCart={() => setQuickViewProduct(d)} key={i} product={d} onOpenQuickView={() => setQuickViewProduct(d)} />
             )}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -11,38 +11,8 @@ import ImageGallery from '../../components/ImageGallery';
 import Accordion from '../../components/Accordion';
 import QuickViewModal from '../../components/QuickViewModal';
 
-interface ProductDetailType {
-  id: string,
-  description: string,
-  sku: string,
-  price: number,
-  discountedPrice: number,
-  formattedPrice: string,
-  formattedDiscountedPrice: string,
-  name: string
-  media: Array<{
-    index: number,
-    fullUrl: string
-  }>,
-  options: Array<{
-    key: string,
-    selections: Array<{
-      id: number,
-      key: string
-    }>
-  }>,
-  inventory: {
-    quantity: number
-  },
-  additionalInfo: Array<{
-    id: string,
-    title: string,
-    description: string
-  }>
-}
-
 export const getServerSideProps: GetServerSideProps<{
-  product: ProductDetailType,
+  product: ProductType,
   relatedProducts: ProductType[]
 }> = async (context) => {
   const sku = context.params?.productSku;
@@ -72,9 +42,17 @@ export default function ProductPage({
   const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>("");
+  const [imageIndex, setImageIndex] = useState(0);
   const [quantity, setQuantity] = useState<number>(1);
   const [autoCart, setAutoCart] = useState<boolean>(false);
   const [cookies] = useCookies(['token']);
+
+  useEffect(() => {
+    if (selectedColor) {
+      const index = product.options[0].selections.filter(item => item.key === selectedColor)[0].linkedMediaItems[0].index;
+      setImageIndex(index);
+    }
+  }, [selectedColor, product])
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -106,7 +84,7 @@ export default function ProductPage({
         <div className="md:flex px-5 md:px-0">
           {/* Left Side */}
           <div className="flex-1">
-            <ImageGallery images={product.media.map(item => item.fullUrl)} />
+            <ImageGallery imageIndex={imageIndex} updateImageIndex={(i: number) => setImageIndex(i)} images={product.media.map(item => item.fullUrl)} />
             <div className="text-sm mt-8">{product.description}</div>
           </div>
           {/* Right Side */}
@@ -120,30 +98,32 @@ export default function ProductPage({
               <div className="text-2xl my-3">{product.formattedDiscountedPrice}</div>
             </div>
             <div className="my-5">
-              <div className="mb-2">color:</div>
-              {product.options.filter(item => item.key == "Color")[0].selections.map((d, i) =>
-                <div key={i}>
-                  <input onChange={() => setSelectedColor(d.key)} type="radio" id={d.key} name="Color" required />
-                  <label htmlFor={d.key}>{d.key}</label>
-                </div>
-              )}
+              <div className="mb-2">Color{selectedColor && ": " + selectedColor}</div>
+              <div className="flex gap-2">
+                {product.options.filter(item => item.key == "Color")[0].selections.map((d, i) =>
+                  <div key={i}>
+                    <input onChange={() => setSelectedColor(d.key)} checked={selectedColor === d.key} id={d.key} className="peer sr-only" type="radio" name="color" />
+                    <label htmlFor={d.key} className="w-5 h-5 border-2 border-gray-100 block peer-checked:ring-1 ring-offset-1 ring-black rounded-full" style={{ backgroundColor: d.value }} />
+                  </div>
+                )}
+              </div>
             </div>
             <div className="my-5">
-              <div className="mb-2">size</div>
-              <select value={selectedSize ? selectedSize : ""} onChange={(e) => setSelectedSize(e.target.value)} required>
+              <div className="mb-2">Size</div>
+              <select className="appearance-none w-full p-1.5 border my-2" value={selectedSize ? selectedSize : ""} onChange={(e) => setSelectedSize(e.target.value)} required>
                 <option value="">Select size</option>
                 {product.options.filter(item => item.key == "Size")[0].selections.map((d, i) =>
                   <option key={i}>{d.key}</option>
                 )}
               </select>
             </div>
-            <div className="my-5">
-              <div className="mb-2">Quantity</div>
-              <input value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} type="number" step={1} max={product.inventory.quantity} />
+            <div>
+              <div>Quantity</div>
+              <input className="appearance-none rounded p-2 my-2 border" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} type="number" step={1} max={product.inventory.quantity} />
             </div>
             <div className="mt-5">
-              <button type="submit" className="w-full mb-3 py-3 border border-black">Add to cart</button>
-              <button type="button" className="w-full mb-3 py-3 border border-black">Buy Now</button>
+              <button type="submit" className="w-full mb-3 py-3 border border-black bg-black text-white">Add To Cart</button>
+              <button type="button" className="w-full mb-3 py-3 border border-red-400 bg-red-400 text-white">Buy Now</button>
             </div>
             {product.additionalInfo.map((d, i) =>
               <Accordion show title={d.title} key={i}>

@@ -18,6 +18,7 @@ export interface AppPropsType {
 
 export interface ProductType {
   id: string,
+  description: string,
   name: string,
   ribbon: string,
   price: number,
@@ -38,6 +39,7 @@ export interface ProductType {
       key: string
       linkedMediaItems: Array<{
         fullUrl: string,
+        index: number,
       }>
     }>
   }>,
@@ -48,6 +50,11 @@ export interface ProductType {
     mediaType: string,
     altText: string | null,
     title: string
+  }>
+  additionalInfo: Array<{
+    id: string,
+    title: string,
+    description: string
   }>
 }
 

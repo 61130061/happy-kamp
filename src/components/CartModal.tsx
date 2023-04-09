@@ -48,8 +48,12 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
           >
             <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
               <div className="flex flex-col flex-1 overflow-y-hidden">
-                <div className="flex text-xl py-8 px-10 items-center bg-primary-1 text-white">
-                  <button name="close-cart-modal" onClick={handleClose}>{'>'}</button>
+                <div className="flex text-xl p-8 items-center bg-primary-1 text-white">
+                  <button className="p-1" name="close-cart-modal" onClick={handleClose}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                  </button>
                   <div className="text-center flex-1">Cart</div>
                 </div>
                 <div className="flex flex-col h-screen justify-between flex-1">
@@ -67,7 +71,7 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
                         <Link href="/shopping-cart"><button className="w-full text-sm p-3 bg-primary-1 text-white mt-8">View Cart</button></Link>
                       </div>
                     </> :
-                    <div className="text-center">Cart is empty</div>
+                    <div className="text-center my-10">Cart is empty</div>
                   }
                 </div>
               </div>

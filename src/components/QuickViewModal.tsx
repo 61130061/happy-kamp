@@ -15,12 +15,20 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
   const [product, setProduct] = useState<ProductType | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>("");
+  const [imageIndex, setImageIndex] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(1);
   const [cookies] = useCookies(['token']);
 
   useEffect(() => {
     fetchData(sku);
   }, [sku])
+
+  useEffect(() => {
+    if (product) {
+      const index = product.options[0].selections.filter(item => item.key === selectedColor)[0].linkedMediaItems[0].index;
+      setImageIndex(index);
+    }
+  }, [selectedColor, product]);
 
   const fetchData = async (sku: string) => {
     try {
@@ -69,7 +77,7 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
         <div className="fixed inset-0 bg-black opacity-50"></div>
 
         {/* Modal container */}
-        <div className="relative sm:flex bg-white w-full max-w-4xl mx-auto rounded shadow-lg overflow-hidden transition-all">
+        <div className="relative py-3 sm:flex bg-white w-full max-w-4xl mx-auto rounded shadow-lg overflow-hidden transition-all">
           {status ?
             <div className="text-xl w-full text-center py-44">{status}</div> :
             product &&
@@ -81,26 +89,33 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
               </button>
               {/* Feature image */}
               <div className="flex-1 flex justify-center">
-                <Image width={640} height={320} alt={product.media[0].title} className="max-w-md min-w-[320px]" src={product.media[0].fullUrl} />
+                <Image width={640} height={320} alt={product.media[0].title} className="max-w-md min-w-[320px]" src={product.media[imageIndex].fullUrl} />
               </div>
 
               {/* Add to Cart form */}
               <form onSubmit={onSubmit} className="sm:w-[40%] text-sm flex flex-col sm:gap-4 gap-2 px-5 sm:py-10 pb-5">
                 <div data-testid="quick-view-product-name" className="text-2xl">{product.name}</div>
-                <div className="text-2xl">{product.price}</div>
-                <div>sku: {product.sku}</div>
+                <div className="flex gap-2">
+                  {product.price !== product.discountedPrice &&
+                    <div className="text-2xl line-through">{product.formattedPrice}</div>
+                  }
+                  <div className="text-2xl">{product.formattedDiscountedPrice}</div>
+                </div>
+                <div>SKU: {product.sku}</div>
                 <div>
-                  <div>color:</div>
-                  {product.options.filter(item => item.key == "Color")[0].selections.map((d, i) =>
-                    <div key={i}>
-                      <input onChange={() => setSelectedColor(d.key)} type="radio" id={d.key} name="Color" required />
-                      <label htmlFor={d.key}>{d.key}</label>
-                    </div>
-                  )}
+                  <div>Color{selectedColor && ": "+selectedColor}</div>
+                  <div className="flex gap-1 py-2">
+                    {product.options.filter(item => item.key == "Color")[0].selections.map((d, i) =>
+                      <div key={i}>
+                        <input onChange={() => setSelectedColor(d.key)} checked={selectedColor === d.key} id={d.key} className="peer sr-only" type="radio" name="color" required />
+                        <label htmlFor={d.key} className="w-5 h-5 border-2 border-gray-100 block peer-checked:ring-1 ring-offset-1 ring-black rounded-full" style={{ backgroundColor: d.value }} />
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div>
-                  <div>size</div>
-                  <select value={selectedSize ? selectedSize : ""} onChange={(e) => setSelectedSize(e.target.value)} required>
+                  <div>Size</div>
+                  <select className="appearance-none w-full p-1.5 border my-2" value={selectedSize ? selectedSize : ""} onChange={(e) => setSelectedSize(e.target.value)} required>
                     <option value="">Select size</option>
                     {product.options.filter(item => item.key == "Size")[0].selections.map((d, i) =>
                       <option key={i}>{d.key}</option>
@@ -109,10 +124,10 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
                 </div>
                 <div>
                   <div>Quantity</div>
-                  <input value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} type="number" step={1} max={product.inventory.quantity} />
+                  <input className="appearance-none rounded p-2 my-2 border" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} type="number" step={1} max={product.inventory.quantity} />
                 </div>
                 <div className="mt-5">
-                  <button type="submit" className="w-full py-3 border border-black">Add to cart</button>
+                  <button type="submit" className="w-full py-3 border bg-black text-white border-black">Add to cart</button>
                   <Link href={"product-page/" + product.sku}>
                     <div className="mt-3 underline">View More Details</div>
                   </Link>

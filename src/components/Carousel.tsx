@@ -57,14 +57,14 @@ export default function Carousel({ images }: PropsType) {
           ></button>
         ))}
       </div>
-      <button aria-label="previous-slide" className="carousel-arrow-left absolute top-1/2 left-4 md:left-10 transform -translate-y-1/2 focus:outline-none" onClick={goToPrevious}>
-        <svg viewBox="0 0 24 24" className="w-10 h-10 fill-current text-gray-700">
-          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L9.83 12l5.58-5.59z"></path>
+      <button aria-label="previous-slide" className="py-5 absolute top-1/2 left-4 md:left-10 transform -translate-y-1/2 focus:outline-none" onClick={goToPrevious}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
       </button>
-      <button aria-label="next-slide" className="carousel-arrow-right absolute top-1/2 right-4 md:right-10 transform -translate-y-1/2 focus:outline-none" onClick={goToNext}>
-        <svg viewBox="0 0 24 24" className="w-10 h-10 fill-current text-gray-700">
-          <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L14.17 12l-5.58 5.59z"></path>
+      <button aria-label="next-slide" className="py-5 absolute top-1/2 right-4 md:right-10 transform -translate-y-1/2 focus:outline-none" onClick={goToNext}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
       </button>
     </div>
