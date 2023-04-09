@@ -30,3 +30,9 @@ Frontend - happy kids!
   - Auth modal test
   - Quick view and Add to cart modal test
   - Shop all button test
+  
+### Emo Syntax for commit
+- ➕ = add new feature
+- ♻️ = update exist feature
+- 🔨 = fix bugs
+- 🗑 = remove feature
