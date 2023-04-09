@@ -17,7 +17,7 @@ Frontend - happy kids!
 
 - [x] fix product image not found
 - [x] filter show number of product showing rn/all product
-- [ ] Show saving price
+- [x] Show saving price
 - [ ] Out of stock
 - [ ] Multiple currencies
 

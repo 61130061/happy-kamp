@@ -15,6 +15,8 @@ export default function ShoppingCart({
 }: AppPropsType) {
   const [cookies] = useCookies(['token']);
   const [cart, setCart] = useState(cartItems);
+  const [enterPromote, setEnterPromote] = useState<boolean>(false);
+  const [addNote, setAddNote] = useState<boolean>(false);
 
   useEffect(() => {
     setCart(cartItems);
@@ -48,8 +50,11 @@ export default function ShoppingCart({
                   />
                 ))}
               </div>
-              <div>
-                <button className="flex gap-1 items-center text-primary-3">
+              <div className="space-y-3">
+                <button
+                  onClick={() => setAddNote((prev) => !prev)}
+                  className="flex gap-1 items-center text-primary-3"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -66,6 +71,18 @@ export default function ShoppingCart({
                   </svg>
                   Add a note
                 </button>
+                {addNote && (
+                  <div className="flex flex-col gap-2 items-end">
+                    <textarea
+                      className="border w-full text-sm rounded p-2"
+                      rows={4}
+                      placeholder="your note..."
+                    />
+                    <button className="bg-primary-1 text-sm text-primary-2 py-2 px-3 rounded">
+                      Add note
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           ) : (
@@ -112,8 +129,24 @@ export default function ShoppingCart({
                 </div>
                 <div className="underline">Bangkok, Thailand</div>
               </div>
-              <div className="pt-3 text-primary-3">
-                <button className="flex items-center gap-1">
+              <div className="flex justify-between">
+                <div>Saving</div>
+                <div>
+                  -
+                  {(
+                    cart.cart_list.reduce(
+                      (acc, ele) => acc + ele.price * ele.qty,
+                      0,
+                    ) - cart.total
+                  ).toFixed(2)}
+                  $
+                </div>
+              </div>
+              <div className="pt-3 space-y-3 text-primary-3">
+                <button
+                  onClick={() => setEnterPromote((prev) => !prev)}
+                  className="flex items-center gap-1"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -130,6 +163,27 @@ export default function ShoppingCart({
                   </svg>
                   Enter a promote code
                 </button>
+                {enterPromote && (
+                  <div className="flex gap-2">
+                    <input className="flex-1 text-primary-1 rounded px-3 py-1.5 border" />
+                    <button className="px-3 rounded bg-primary-1 text-primary-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex justify-between mb-8">

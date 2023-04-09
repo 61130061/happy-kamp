@@ -178,6 +178,19 @@ export default function Checkout({ cartItems }: PropsType) {
                     </div>
                     <div className="underline">Bangkok, Thailand</div>
                   </div>
+                  <div className="flex justify-between">
+                    <div>Saving</div>
+                    <div>
+                      -
+                      {(
+                        cartItems.cart_list.reduce(
+                          (acc, ele) => acc + ele.price * ele.qty,
+                          0,
+                        ) - cartItems.total
+                      ).toFixed(2)}
+                      $
+                    </div>
+                  </div>
                 </div>
                 <div className="flex justify-between">
                   <div>Total</div>
