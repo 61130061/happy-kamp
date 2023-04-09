@@ -108,26 +108,32 @@ export default function QuickViewModal({ onClose, sku, onAddToCart }: PropsType)
                     {product.options.filter(item => item.key == "Color")[0].selections.map((d, i) =>
                       <div key={i}>
                         <input onChange={() => setSelectedColor(d.key)} checked={selectedColor === d.key} id={d.key} className="peer sr-only" type="radio" name="color" required />
-                        <label htmlFor={d.key} className="w-5 h-5 border-2 border-gray-100 block peer-checked:ring-1 ring-offset-1 ring-black rounded-full" style={{ backgroundColor: d.value }} />
+                        <label htmlFor={d.key} className="w-5 h-5 border-2 border-gray-100 block peer-checked:ring-1 ring-offset-1 ring-primary-1 rounded-full" style={{ backgroundColor: d.value }} />
                       </div>
                     )}
                   </div>
                 </div>
                 <div>
                   <div>Size</div>
-                  <select className="appearance-none w-full p-1.5 border my-2" value={selectedSize ? selectedSize : ""} onChange={(e) => setSelectedSize(e.target.value)} required>
-                    <option value="">Select size</option>
-                    {product.options.filter(item => item.key == "Size")[0].selections.map((d, i) =>
-                      <option key={i}>{d.key}</option>
-                    )}
-                  </select>
+                  <div className="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-3 h-3 absolute top-5 right-3">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                    <select className="appearance-none w-full p-1.5 border my-2" value={selectedSize ? selectedSize : ""} onChange={(e) => setSelectedSize(e.target.value)} required>
+
+                      <option value="">Select size</option>
+                      {product.options.filter(item => item.key == "Size")[0].selections.map((d, i) =>
+                        <option key={i}>{d.key}</option>
+                      )}
+                    </select>
+                  </div>
                 </div>
                 <div>
                   <div>Quantity</div>
                   <input className="appearance-none rounded p-2 my-2 border" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} type="number" step={1} max={product.inventory.quantity} />
                 </div>
                 <div className="mt-5">
-                  <button type="submit" className="w-full py-3 border bg-black text-white border-black">Add to cart</button>
+                  <button type="submit" className="w-full py-3 bg-primary-1 hover:bg-primary-3 text-white border-black">Add to cart</button>
                   <Link href={"product-page/" + product.sku}>
                     <div className="mt-3 underline">View More Details</div>
                   </Link>

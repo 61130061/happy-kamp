@@ -117,7 +117,7 @@ export default function ShopCollection ({
             <Accordion title="Collection">
               <div className="flex flex-col-reverse mt-2 text-sm">
                 {filters[0].values.map((d, i) =>
-                  <div key={i}>
+                  <div key={i} className="p-1">
                     <input onChange={onUpdateCategory} className="peer sr-only" type="radio" value={d.value} checked={d.value === filter.CATEGORY} id={d.value} name="category" />
                     <label className="peer-checked:font-semibold py-1 hover:cursor-pointer" htmlFor={d.value}>{d.value}</label>
                   </div>
@@ -136,7 +136,7 @@ export default function ShopCollection ({
                   max={getMinMaxPrice()[1]}
                   onChange={(s) => setPrice(s)}
                   onAfterChange={(s) => setFilter(prev => ({ ...prev, PRICE: `${s[0]}-${s[1]}` }))}
-                  thumbClassName="w-3 h-3 hover:cursor-pointer top-[-5px] bg-black rounded-full"
+                  thumbClassName="w-3 h-3 hover:cursor-pointer top-[-5px] bg-primary-1 rounded-full"
                   trackClassName="track"
                 />
                 <div className="flex text-sm justify-between mt-3">
@@ -151,7 +151,7 @@ export default function ShopCollection ({
                 {filters[2].values.map((d, i) =>
                   <div key={i}>
                     <input onChange={() => onUpdateColor(d.value)} checked={filter.OPTION_COLOR.split(',').includes(d.value)} id={d.key} className="peer sr-only" type="checkbox" />
-                    <label htmlFor={d.key} className="w-5 h-5 border-2 border-gray-100 block peer-checked:ring-1 ring-offset-2 ring-black rounded-full" style={{ backgroundColor: d.key }} />
+                    <label htmlFor={d.key} className="w-5 h-5 border-2 border-gray-100 block peer-checked:ring-1 ring-offset-2 ring-primary-1 rounded-full" style={{ backgroundColor: d.key }} />
                   </div>
                 )}
               </div>
@@ -160,7 +160,7 @@ export default function ShopCollection ({
             <Accordion title="Size">
               <div className="text-sm mt-2">
                 {filters[3].values.map((d, i) =>
-                  <label key={i} className="flex hover:cursor-pointer items-center gap-3">
+                  <label key={i} className="flex hover:cursor-pointer items-center gap-3 px-2 py-0.5">
                     <input onChange={() => onUpdateSize(d.value)} checked={filter.OPTION_LIST.split(',').includes(d.value)} type="checkbox" />
                     <div>{d.key}</div>
                   </label>

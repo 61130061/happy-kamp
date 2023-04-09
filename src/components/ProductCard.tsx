@@ -29,7 +29,7 @@ export default function ProductCard({ product, onOpenQuickView, onAddToCart, ind
             width={320}
           />
           {product.ribbon !== "" &&
-            <div className="absolute left-0 top-0 bg-red-600 px-3 text-white text-sm">{product.ribbon}</div>
+            <div className="absolute left-0 top-0 bg-primary-3 px-3 text-white text-sm">{product.ribbon}</div>
           }
         </Link>
         <button data-testid={"quick-view-button-" + index} name="quick-view-button" onClick={() => onOpenQuickView()} className="w-full bg-white bg-opacity-50 py-3 absolute bottom-0 transition-all duration-300 transform translate-y-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 z-10">

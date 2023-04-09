@@ -48,9 +48,14 @@ export default function ProductPage({
   const [cookies] = useCookies(['token']);
 
   useEffect(() => {
-    if (selectedColor) {
-      const index = product.options[0].selections.filter(item => item.key === selectedColor)[0].linkedMediaItems[0].index;
-      setImageIndex(index);
+    // TODO: Fix product.options[0].selections.filter(item => item.key === selectedColor)[0].linkedMediaItems[0].index undefined when open related product
+    try {
+      if (product && selectedColor) {
+        const index = product.options[0].selections.filter(item => item.key === selectedColor)[0].linkedMediaItems[0].index;
+        setImageIndex(index);
+      }
+    } catch {
+      setImageIndex(0);
     }
   }, [selectedColor, product])
 
@@ -110,12 +115,17 @@ export default function ProductPage({
             </div>
             <div className="my-5">
               <div className="mb-2">Size</div>
-              <select className="appearance-none w-full p-1.5 border my-2" value={selectedSize ? selectedSize : ""} onChange={(e) => setSelectedSize(e.target.value)} required>
-                <option value="">Select size</option>
-                {product.options.filter(item => item.key == "Size")[0].selections.map((d, i) =>
-                  <option key={i}>{d.key}</option>
-                )}
-              </select>
+              <div className="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-3 h-3 absolute top-5 right-3">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+                <select className="appearance-none w-full p-1.5 border my-2" value={selectedSize ? selectedSize : ""} onChange={(e) => setSelectedSize(e.target.value)} required>
+                  <option value="">Select size</option>
+                  {product.options.filter(item => item.key == "Size")[0].selections.map((d, i) =>
+                    <option key={i}>{d.key}</option>
+                  )}
+                </select>
+              </div>
             </div>
             <div>
               <div>Quantity</div>
@@ -123,7 +133,7 @@ export default function ProductPage({
             </div>
             <div className="mt-5">
               <button type="submit" className="w-full mb-3 py-3 border border-black bg-black text-white">Add To Cart</button>
-              <button type="button" className="w-full mb-3 py-3 border border-red-400 bg-red-400 text-white">Buy Now</button>
+              <button type="button" className="w-full mb-3 py-3 border border-red-400 bg-primary-3 text-white">Buy Now</button>
             </div>
             {product.additionalInfo.map((d, i) =>
               <Accordion show title={d.title} key={i}>

@@ -68,7 +68,7 @@ export default function CartModal ({ onUpdateQty, isOpen, onClose, cartItems, on
                       <div className="px-8 py-5 text-3xl">
                         <div>Subtotal</div>
                         <div>$ {cartItems.sub_total.toFixed(2)}</div>
-                        <Link href="/shopping-cart"><button className="w-full text-sm p-3 bg-primary-1 text-white mt-8">View Cart</button></Link>
+                        <Link href="/shopping-cart"><button className="w-full text-sm p-3 bg-primary-1 hover:bg-primary-3 text-primary-2 mt-8">View Cart</button></Link>
                       </div>
                     </> :
                     <div className="text-center my-10">Cart is empty</div>
@@ -123,7 +123,11 @@ function Item ({ data, onDel, onQty }: ItemsPropsType) {
 
   return (
     <div className="border flex gap-2 p-3 relative group">
-      <button onClick={() => onDel(data)} className="absolute opacity-0 group-hover:opacity-100 top-1 right-3">x</button>
+      <button onClick={() => onDel(data)} className="absolute md:opacity-0 group-hover:opacity-100 top-2 right-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 text-gray-400">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
       <Image alt={img ? img : "/image-not-found.jpg"} src={img ? img : "/image-not-found.jpg"} width={80} height={80} />
       <div className="space-y-1 text-sm">
         <div>{data.name}</div>

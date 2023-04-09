@@ -41,7 +41,7 @@ export default function Layout ({ title, onOpenCart, children, onDelCartItem, ca
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className="text-primary-1">
         <CartModal onUpdateQty={(p: CartPayloadType, o: CartPayloadType) => onUpdateQty(p, o, cookies.token)} onDelCartItem={(d: CartPayloadType) => onDelCartItem(d, cookies.token)} cartItems={cartItems} isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         <Annoucement announcements={['Free Shipping Over $50', 'Get 10% Off - Use Coupon Code HAPPY123']} />
         {/* TODO: Figure out why cartItems undefined causing an error */}

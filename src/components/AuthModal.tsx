@@ -80,7 +80,7 @@ function Login ({ swap }: CompPropsType) {
   return (
     <div className="text-center w-[320px]">
       <div className="mb-3 text-5xl">Login</div>
-      <div className="mb-5">New to this site? <button onClick={() => swap()} className="text-red-400">Sign Up</button></div>
+      <div className="mb-5">New to this site? <button onClick={() => swap()} className="text-primary-3">Sign Up</button></div>
       <form onSubmit={onSubmit} className="flex flex-col gap-5 text-left">
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
@@ -92,7 +92,7 @@ function Login ({ swap }: CompPropsType) {
         </div>
         <button type="button" className="underline text-sm text-left w-fit">Forgot password?</button>
         <div className={`text-sm${success ? " text-green-500":" text-red-500"}`}>{message}</div>
-        <button type="submit" className="py-3 my-3 bg-red-500 text-white">Login</button>
+        <button type="submit" className="py-3 my-3 bg-primary-3 text-white">Login</button>
       </form>
     </div>
   )
@@ -147,7 +147,7 @@ function Signup({ swap }: CompPropsType) {
   return (
     <div className="text-center w-[320px]">
       <div className="mb-3 text-3xl">Sign Up</div>
-      <div className="mb-5">Already a member? <button onClick={() => swap()} className="text-red-400">Login</button></div>
+      <div className="mb-5">Already a member? <button onClick={() => swap()} className="text-primary-3">Login</button></div>
       <form onSubmit={onSubmit} className="flex flex-col gap-5 text-left">
         <div className="flex flex-col gap-2">
           <label htmlFor="fullname">Name</label>
@@ -162,7 +162,7 @@ function Signup({ swap }: CompPropsType) {
           <input onChange={onTyping} value={form.password} id="password" className="border-b p-1 py-2" type="password" placeholder="••••••••" />
         </div>
         <div className={`text-sm${success ? " text-green-500": " text-red-500"}`}>{message}</div>
-        <button type="submit" className="py-3 my-5 bg-red-500 text-white">Sign Up</button>
+        <button type="submit" className="py-3 my-5 bg-primary-3 text-white">Sign Up</button>
       </form>
     </div>
   )

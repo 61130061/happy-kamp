@@ -120,7 +120,7 @@ export default function Home ({
           </div>
           <div className="flex justify-center mt-14">
             <Link href="/shop-collection">
-              <button name="shop-all" className="py-2 px-8 bg-black text-white">Shop All</button>
+              <button name="shop-all" className="py-2 px-8 hover:bg-primary-3 bg-primary-1 text-white">Shop All</button>
             </Link>
           </div>
         </div>

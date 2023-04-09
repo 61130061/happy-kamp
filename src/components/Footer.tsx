@@ -45,8 +45,8 @@ export default function Footer() {
         <div className="flex flex-col items-center mb-14">
           <div className="text-[24px] my-5">Join Our Mailing List</div>
           <div className="flex flex-col sm:flex-row w-full justify-center gap-2">
-            <input className="border px-3 py-2 border-black" type="email" placeholder="Enter your email here*" />
-            <button className="bg-black px-2 py-2 text-white">Subscribe Now</button>
+            <input className="border px-3 py-2 border-primary-1" type="email" placeholder="Enter your email here*" />
+            <button className="bg-primary-1 hover:bg-primary-3 px-4 py-2 text-white">Subscribe Now</button>
           </div>
         </div>
 
