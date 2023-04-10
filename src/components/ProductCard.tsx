@@ -21,7 +21,7 @@ export default function ProductCard({
   const [img, setImg] = useState<string | null>(product.media[imageIndex].url);
 
   useEffect(() => {
-    setImg(product.media[imageIndex].url);
+    if (product.media[imageIndex]) setImg(product.media[imageIndex].url);
   }, [imageIndex, setImg]);
 
   return (

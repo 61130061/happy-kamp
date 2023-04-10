@@ -257,7 +257,7 @@ export default function ShopCollection({
               <ProductCard
                 index={i}
                 onAddToCart={() => setQuickViewProduct(d)}
-                key={i}
+                key={d.id}
                 product={d}
                 onOpenQuickView={() => setQuickViewProduct(d)}
               />
