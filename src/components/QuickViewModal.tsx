@@ -183,6 +183,7 @@ export default function QuickViewModal({
                             />
                             <label
                               htmlFor={d.key}
+                              data-testid={'color-select-' + i}
                               className="w-5 h-5 border-2 border-gray-100 block peer-checked:ring-1 ring-offset-1 ring-primary-1 rounded-full"
                               style={{ backgroundColor: d.value }}
                             />
@@ -208,6 +209,7 @@ export default function QuickViewModal({
                         />
                       </svg>
                       <select
+                        aria-label="size-select"
                         className="appearance-none w-full p-1.5 border my-2"
                         value={selectedSize ? selectedSize : ''}
                         onChange={(e) => setSelectedSize(e.target.value)}
@@ -235,6 +237,7 @@ export default function QuickViewModal({
                   </div>
                   <div className="mt-5">
                     <button
+                      name="add-to-my-cart"
                       type="submit"
                       className="w-full py-3 bg-primary-1 hover:bg-primary-3 text-white border-black"
                     >

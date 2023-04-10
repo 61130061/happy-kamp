@@ -128,7 +128,7 @@ export default function ShopCollection({
       )}
       <div className="max-w-7xl mx-auto">
         <div className="text-3xl text-center my-10">Shop Collection</div>
-        <div className="md:flex mb-10">
+        <div aria-label="filter-container" className="md:flex mb-10">
           <div className="w-full md:w-[180px] lg:w-[240px] p-[20px]">
             <div
               onClick={() => console.log(filter)}
@@ -252,7 +252,10 @@ export default function ShopCollection({
             )}
           </div>
 
-          <div className="flex-1 grid sm:grid-cols-2 lg:grid-cols-3 gap-y-5">
+          <div
+            aria-label="product-container"
+            className="flex-1 grid sm:grid-cols-2 lg:grid-cols-3 gap-y-5"
+          >
             {showProducts.map((d, i) => (
               <ProductCard
                 index={i}

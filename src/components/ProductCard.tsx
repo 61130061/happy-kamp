@@ -22,7 +22,7 @@ export default function ProductCard({
 
   useEffect(() => {
     if (product.media[imageIndex]) setImg(product.media[imageIndex].url);
-  }, [imageIndex, setImg]);
+  }, [imageIndex, setImg, product.media]);
 
   return (
     <div
