@@ -28,11 +28,19 @@ Frontend - happy kids!
 > Every tests are including both desktop and mobile viewport size
 
 - Home page
+
   - Visibility test
   - Cart modal test
   - Auth modal test
   - Quick view and Add to cart modal test
   - Shop all button test
+
+- Shop Collection page
+  - Visibility test
+  - Cart modal test
+  - Auth modal test
+  - Quick view and Add to cart modal test
+  - Add to cart workflow test
 
 ### Emo Syntax for commit
 
